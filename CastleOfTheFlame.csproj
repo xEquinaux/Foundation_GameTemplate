@@ -57,8 +57,12 @@
     <Content Include="build.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\cotfAPI\cotfAPI.csproj">
+      <Project>{86df94c8-d395-40ac-97c9-daa091de8ea4}</Project>
+      <Name>cotfAPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FoundationR\FoundationR.csproj">
-      <Project>{72858345-5c0c-4843-afa5-7206094a0796}</Project>
+      <Project>{0b03d88d-46eb-48c8-9c02-32d6dc137049}</Project>
       <Name>FoundationR</Name>
     </ProjectReference>
   </ItemGroup>
