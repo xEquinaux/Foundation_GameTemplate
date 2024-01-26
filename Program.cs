@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using PixelFormats = System.Windows.Media.PixelFormats;
 using cotf;
 using FoundationR;
 
@@ -36,7 +37,7 @@ namespace CastleOfTheFlame
         }
         public override void LoadResources()
         {
-            image = REW.Create(40, 60, Color.White);
+            image = REW.Create(40, 60, Color.White, PixelFormats.Bgr32);
             Lib.SetDimensions(640, 480);
             Lib.Initialize(8, new Size(20, 20));
             Texture.GenerateColorTextureFiles(Tile.Instance.TexturePrefix, Color.Gray, new Size(20, 20));
