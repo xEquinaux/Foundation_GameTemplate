@@ -26,6 +26,7 @@ namespace CastleOfTheFlame
     public class Main : Foundation
     {
         bool init = false;
+        REW image;
         internal Main()
         {
         }
@@ -35,6 +36,7 @@ namespace CastleOfTheFlame
         }
         public override void LoadResources()
         {
+            image = REW.Create(40, 60, Color.White);
             Lib.SetDimensions(640, 480);
             Lib.Initialize(8, new Size(20, 20));
             Texture.GenerateColorTextureFiles(Tile.Instance.TexturePrefix, Color.Gray, new Size(20, 20));
@@ -43,30 +45,10 @@ namespace CastleOfTheFlame
         }
         public override void Update()
         {
-            foreach (var item in Lib.tile)
-            {
-                if (item.X > 20 && item.X < Lib.OutputWidth - 40 && item.Y > 20 && item.Y < Lib.OutputHeight - 40)
-                {
-                    item.active = false;
-                }
-                else item.active = true;
-            }
         }
-        public override void Draw(Graphics graphics)
+        public override void Draw(RewBatch rewBatch)
         {
-            if (!init)
-            { 
-                init = true;
-                Lib.Render(graphics);
-            }
-            foreach (var item in Lib.background)
-            {
-                item?.Draw(graphics);
-            }
-            foreach (var item in Lib.tile)
-            {
-                item?.Draw(graphics);
-            }
+            rewBatch.Draw(image, 20, 20);
         }
     }
 }
