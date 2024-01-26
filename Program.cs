@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using PixelFormats = System.Windows.Media.PixelFormats;
 using cotf;
 using FoundationR;
+using Microsoft.Win32;
 
 namespace CastleOfTheFlame
 {
@@ -36,7 +38,7 @@ namespace CastleOfTheFlame
         }
         public override void LoadResources()
         {
-            image = REW.Create(40, 60, Color.White);
+            image = ImageLoader.BitmapIngest(new BitmapFile() { Value = (Bitmap)Bitmap.FromFile(@"C:\Users\nolan\Pictures\frame_splashed_by_nolantheturtle_d2u6wkk-fullview.jpg") });
             Lib.SetDimensions(640, 480);
             Lib.Initialize(8, new Size(20, 20));
             Texture.GenerateColorTextureFiles(Tile.Instance.TexturePrefix, Color.Gray, new Size(20, 20));
@@ -48,7 +50,10 @@ namespace CastleOfTheFlame
         }
         public override void Draw(RewBatch rewBatch)
         {
-            rewBatch.Draw(image, 20, 20);
+            if (image != null)
+            { 
+                rewBatch.Draw(image, 0, 0);
+            }
         }
     }
 }
