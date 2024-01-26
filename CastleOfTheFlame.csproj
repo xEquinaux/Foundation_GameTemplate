@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="cotfAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\cotfAPI\bin\Debug\net48\cotfAPI.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -58,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FoundationR\FoundationR.csproj">
-      <Project>{72858345-5c0c-4843-afa5-7206094a0796}</Project>
+      <Project>{0b03d88d-46eb-48c8-9c02-32d6dc137049}</Project>
       <Name>FoundationR</Name>
     </ProjectReference>
   </ItemGroup>

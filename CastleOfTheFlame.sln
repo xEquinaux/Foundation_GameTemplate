@@ -5,6 +5,10 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CastleOfTheFlame", "CastleOfTheFlame.csproj", "{256EA174-50EE-46A3-9EA4-3EFDC4BF23B4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cotfAPI", "..\cotfAPI\cotfAPI.csproj", "{86DF94C8-D395-40AC-97C9-DAA091DE8EA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoundationR", "..\FoundationR\FoundationR.csproj", "{0B03D88D-46EB-48C8-9C02-32D6DC137049}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,10 +19,14 @@ Global
 		{256EA174-50EE-46A3-9EA4-3EFDC4BF23B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{256EA174-50EE-46A3-9EA4-3EFDC4BF23B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{256EA174-50EE-46A3-9EA4-3EFDC4BF23B4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72858345-5C0C-4843-AFA5-7206094A0796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72858345-5C0C-4843-AFA5-7206094A0796}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72858345-5C0C-4843-AFA5-7206094A0796}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72858345-5C0C-4843-AFA5-7206094A0796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86DF94C8-D395-40AC-97C9-DAA091DE8EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86DF94C8-D395-40AC-97C9-DAA091DE8EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86DF94C8-D395-40AC-97C9-DAA091DE8EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86DF94C8-D395-40AC-97C9-DAA091DE8EA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B03D88D-46EB-48C8-9C02-32D6DC137049}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B03D88D-46EB-48C8-9C02-32D6DC137049}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B03D88D-46EB-48C8-9C02-32D6DC137049}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B03D88D-46EB-48C8-9C02-32D6DC137049}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
