@@ -38,7 +38,6 @@ namespace CastleOfTheFlame
         }
         public override void LoadResources()
         {
-            //image = ImageLoader.BitmapIngest(new BitmapFile() { Value = (Bitmap)Bitmap.FromFile(@"C:\Users\nolan\source\repos\test_env\Textures\bluepane.png") }, PixelFormats.Bgr32);
             Lib.SetDimensions(640, 480);
             Lib.Initialize(8, new Size(20, 20));
             Texture.GenerateColorTextureFiles(Tile.Instance.TexturePrefix, Color.Gray, new Size(20, 20));
@@ -50,6 +49,7 @@ namespace CastleOfTheFlame
         }
         public override void Draw(RewBatch rewBatch)
         {
+            image = ImageLoader.BitmapIngest(new BitmapFile() { Value = (Bitmap)Bitmap.FromFile(@"C:\Users\nolan\source\repos\test_env\Textures\bluepane.png") }, PixelFormats.Bgr32);
             if (image != null)
             {
                 rewBatch.Draw(image, 0, 0);
