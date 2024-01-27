@@ -27,8 +27,6 @@ namespace CastleOfTheFlame
     }
     public class Main : Foundation
     {
-        bool init = false;
-        REW image;
         internal Main()
         {
         }
@@ -49,11 +47,8 @@ namespace CastleOfTheFlame
         }
         public override void Draw(RewBatch rewBatch)
         {
-            image = ImageLoader.BitmapIngest(new BitmapFile() { Value = (Bitmap)Bitmap.FromFile(@"C:\Users\nolan\source\repos\test_env\Textures\bluepane.png") }, PixelFormats.Bgr32);
-            if (image != null)
-            {
-                rewBatch.Draw(image, 0, 0);
-            }
+            rewBatch.Draw(REW.Extract((Bitmap)Bitmap.FromFile(@"C:\Users\nolan\Pictures\frame_splashed_by_nolantheturtle_d2u6wkk-fullview.jpg"), 32), 0, 0);
+            rewBatch.Draw(REW.Extract((Bitmap)Bitmap.FromFile(@"C:\Users\nolan\source\repos\test_env\Textures\bluepane.png"), 32), 0, 0);
         }
     }
 }
