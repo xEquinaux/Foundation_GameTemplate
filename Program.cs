@@ -17,7 +17,7 @@ namespace CastleOfTheFlame
         static void Main(string[] args)
         {
             CastleOfTheFlame.Main m = null;
-            Thread t = new Thread(() => { (m = new Main()).Run(new Surface(0, 0, 640, 480, "Castle of the Flame")); });
+            Thread t = new Thread(() => { (m = new Main()).Run(new Surface(0, 0, 640, 480, "Castle of the Flame", 32)); });
             t.SetApartmentState(ApartmentState.STA);
             t.Start();
             while (Console.ReadLine() != "exit");
@@ -48,7 +48,7 @@ namespace CastleOfTheFlame
         public override void Draw(RewBatch rewBatch)
         {
             rewBatch.Draw(REW.Extract((Bitmap)Bitmap.FromFile(@"C:\Users\nolan\Pictures\frame_splashed_by_nolantheturtle_d2u6wkk-fullview.jpg"), 32), 0, 0);
-            rewBatch.Draw(REW.Extract((Bitmap)Bitmap.FromFile(@"C:\Users\nolan\source\repos\test_env\Textures\bluepane.png"), 32), 0, 0);
+            //rewBatch.Draw(REW.Extract((Bitmap)Bitmap.FromFile(@"C:\Users\nolan\source\repos\test_env\Textures\bluepane.png"), 32), 0, 0);
         }
     }
 }
