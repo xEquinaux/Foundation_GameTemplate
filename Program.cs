@@ -55,9 +55,9 @@ namespace CastleOfTheFlame
         {
             if (image != null)
             {
-                rewBatch.Draw(image[0], 0, 0);
+                //rewBatch.Draw(image[0], 0, 0);
                 rewBatch.Draw(image[1], 0, 0);
-                rewBatch.Draw(image[2], 0, 0);
+                //rewBatch.Draw(image[2], 0, 0);
             }
         }
     }
