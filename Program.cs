@@ -7,12 +7,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using PixelFormats = System.Windows.Media.PixelFormats;
 using cotf;
-using REW = FoundationR.REW;
+using FoundationR;
 using Microsoft.Win32;
 using System.IO;
 using cotf.Base;
 using cotf.Assets;
-using FoundationR;
 
 namespace CastleOfTheFlame
 {
@@ -37,12 +36,12 @@ namespace CastleOfTheFlame
         Lightmap[,] map;
         int width = 640;
         int height = 480;
-        static int size = 40;
+        static int size = 50;
         REW[] image = new REW[2];
         float range = 200f;
         Size _size = new Size(size, size);
         bool init;
-        int lightXY = size * 2;
+        int lightXY = 80;
         internal Main()
         {
         }
@@ -68,7 +67,7 @@ namespace CastleOfTheFlame
                     wall[i, j].texture = image[0];
                 }
             }
-            light[0] = new Lamp(lightXY, lightXY, range, Color.Yellow);
+            light[0] = new Lamp(lightXY, lightXY, range, Lamp.RandomLight());
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j = 0; j < map.GetLength(1); j++)
@@ -106,10 +105,7 @@ namespace CastleOfTheFlame
             {
                 for (int j = 0; j < wall.GetLength(1); j++)
                 {
-                    if (wall[i, j].active)
-                    { 
-                        rewBatch.Draw(wall[i, j].texture, i * size, j * size);
-                    }
+                    rewBatch.Draw(wall[i, j].texture, i * size, j * size);
                 }
             }
             for (int i = 0; i < tile.GetLength(0); i++)
