@@ -29,7 +29,7 @@ namespace CastleOfTheFlame
     {
         REW[] image = new REW[]
         {
-            REW.Create(640, 480, Color.Black, PixelFormats.Bgr24),
+            ImageLoader.BitmapIngest(new BitmapFile() { Value = (Bitmap)Bitmap.FromFile(@"C:\Users\nolan\Pictures\frame_splashed_by_nolantheturtle_d2u6wkk-fullview.jpg") }, PixelFormats.Bgr32),
             ImageLoader.BitmapIngest(new BitmapFile() { Value = (Bitmap)Bitmap.FromFile(@"C:\Users\nolan\Pictures\Screenshots\sketch.bmp") }, PixelFormats.Bgr32),
             ImageLoader.BitmapIngest(new BitmapFile() { Value = (Bitmap)Bitmap.FromFile(@"C:\Users\nolan\source\repos\test_env\Textures\bluepane.png") }, PixelFormats.Bgr32)
         };
@@ -55,9 +55,9 @@ namespace CastleOfTheFlame
         {
             if (image != null)
             {
-                //rewBatch.Draw(image[0], 0, 0);
+                rewBatch.Draw(image[0], 0, 0);
                 rewBatch.Draw(image[1], 0, 0);
-                //rewBatch.Draw(image[2], 0, 0);
+                rewBatch.Draw(image[2], 0, 0);
             }
         }
     }
