@@ -9,6 +9,7 @@ using PixelFormats = System.Windows.Media.PixelFormats;
 using cotf;
 using FoundationR;
 using Microsoft.Win32;
+using System.IO;
 
 namespace CastleOfTheFlame
 {
@@ -27,12 +28,7 @@ namespace CastleOfTheFlame
     }
     public class Main : Foundation
     {
-        REW[] image = new REW[]
-        {
-            ImageLoader.BitmapIngest(new BitmapFile() { Value = (Bitmap)Bitmap.FromFile(@"C:\Users\nolan\Pictures\frame_splashed_by_nolantheturtle_d2u6wkk-fullview.jpg") }, PixelFormats.Bgr32),
-            ImageLoader.BitmapIngest(new BitmapFile() { Value = (Bitmap)Bitmap.FromFile(@"C:\Users\nolan\Pictures\Screenshots\sketch.bmp") }, PixelFormats.Bgr32),
-            ImageLoader.BitmapIngest(new BitmapFile() { Value = (Bitmap)Bitmap.FromFile(@"C:\Users\nolan\source\repos\test_env\Textures\bluepane.png") }, PixelFormats.Bgr32)
-        };
+        REW[] image = new REW[3];
         internal Main()
         {
         }
@@ -42,6 +38,9 @@ namespace CastleOfTheFlame
         }
         public override void LoadResources()
         {
+            image[0] = new FileStream(@"C:\Users\nolan\Pictures\output\bluepane.rew", FileMode.Open).ReadREW();
+            image[1] = new FileStream(@"C:\Users\nolan\Pictures\output\frame_splashed_by_nolantheturtle_d2u6wkk-fullview.rew", FileMode.Open).ReadREW();
+            image[2] = new FileStream(@"C:\Users\nolan\Pictures\output\sketch.rew", FileMode.Open).ReadREW();
             Lib.SetDimensions(640, 480);
             Lib.Initialize(8, new Size(20, 20));
             Texture.GenerateColorTextureFiles(Tile.Instance.TexturePrefix, Color.Gray, new Size(20, 20));
@@ -55,9 +54,9 @@ namespace CastleOfTheFlame
         {
             if (image != null)
             {
-                rewBatch.Draw(image[0], 0, 0);
-                rewBatch.Draw(image[1], 0, 0);
                 rewBatch.Draw(image[2], 0, 0);
+                rewBatch.Draw(image[1], 0, 0);
+                rewBatch.Draw(image[0], 0, 0);
             }
         }
     }
