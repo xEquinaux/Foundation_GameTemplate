@@ -7,9 +7,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using PixelFormats = System.Windows.Media.PixelFormats;
 using cotf;
-using FoundationR;
+using REW = FoundationR.REW;
 using Microsoft.Win32;
 using System.IO;
+using cotf.Base;
+using cotf.Assets;
+using FoundationR;
 
 namespace CastleOfTheFlame
 {
@@ -28,35 +31,96 @@ namespace CastleOfTheFlame
     }
     public class Main : Foundation
     {
-        REW[] image = new REW[3];
+        Tile[,] tile;
+        Wall[,] wall;
+        Lamp[] light;
+        Lightmap[,] map;
+        int width = 640;
+        int height = 480;
+        static int size = 40;
+        REW[] image = new REW[2];
+        float range = 200f;
+        Size _size = new Size(size, size);
+        bool init;
+        int lightXY = size * 2;
         internal Main()
         {
         }
         public override void Initialize()
         {
-            Lamp.NewLamp(80, 80, 200, Color.Orange, true);
+            tile = new Tile[width / size, height / size];
+            wall = new Wall[width / size, height / size];
+            map = new Lightmap[width / size, height / size];
+            light = new Lamp[10];
+            for (int i = 0; i < tile.GetLength(0); i++)
+            {
+                for (int j = 0; j < tile.GetLength(1); j++)
+                {
+                    tile[i, j] = new Tile(i, j, range, _size, true);
+                    tile[i, j].texture = image[1];
+                }
+            }
+            for (int i = 0; i < wall.GetLength(0); i++)
+            {
+                for (int j = 0; j < wall.GetLength(1); j++)
+                {
+                    wall[i, j] = new Wall(i, j, range, _size);
+                    wall[i, j].texture = image[0];
+                }
+            }
+            light[0] = new Lamp(lightXY, lightXY, range, Color.Yellow);
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    map[i, j] = new Lightmap(i, j, range, _size);
+                }
+            }
         }
         public override void LoadResources()
         {
-            image[0] = new FileStream(@"C:\Users\nolan\Pictures\output\bluepane.rew", FileMode.Open).ReadREW();
-            image[1] = new FileStream(@"C:\Users\nolan\Pictures\output\frame_splashed_by_nolantheturtle_d2u6wkk-fullview.rew", FileMode.Open).ReadREW();
-            image[2] = new FileStream(@"C:\Users\nolan\Pictures\output\sketch.rew", FileMode.Open).ReadREW();
-            Lib.SetDimensions(640, 480);
-            Lib.Initialize(8, new Size(20, 20));
-            Texture.GenerateColorTextureFiles(Tile.Instance.TexturePrefix, Color.Gray, new Size(20, 20));
-            Texture.GenerateColorTextureFiles(cotf.Background.Instance.TexturePrefix, Color.DarkGray, new Size(20, 20));
-            Lib.InitArray();
+            image[0] = Asset<REW>.Load("Textures/tile");
+            image[1] = REW.Create(size, size, Color.GhostWhite, PixelFormats.Bgr32);
         }
         public override void Update()
         {
+            for (int i = 2; i < tile.GetLength(0) - 2; i++)
+            {
+                for (int j = 2; j < tile.GetLength(1) - 2; j++)
+                {
+                    tile[i, j].active = false;
+                }
+            }
+        }
+        public override void PreDraw(RewBatch graphics)
+        {
+            if (!init)
+            {
+                init = true;
+                LightPass.PreProcessing(light, wall, tile);
+            }
         }
         public override void Draw(RewBatch rewBatch)
         {
-            if (image != null)
+            for (int i = 0; i < wall.GetLength(0); i++)
             {
-                rewBatch.Draw(image[2], 0, 0);
-                rewBatch.Draw(image[1], 0, 0);
-                rewBatch.Draw(image[0], 0, 0);
+                for (int j = 0; j < wall.GetLength(1); j++)
+                {
+                    if (wall[i, j].active)
+                    { 
+                        rewBatch.Draw(wall[i, j].texture, i * size, j * size);
+                    }
+                }
+            }
+            for (int i = 0; i < tile.GetLength(0); i++)
+            {
+                for (int j = 0; j < tile.GetLength(1); j++)
+                {
+                    if (tile[i, j].active)
+                    { 
+                        rewBatch.Draw(tile[i, j].texture, i * size, j * size);
+                    }
+                }
             }
         }
     }

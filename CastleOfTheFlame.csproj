@@ -33,9 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cotfAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FoundationR, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\cotfAPI\bin\Debug\net48\cotfAPI.dll</HintPath>
+      <HintPath>..\FoundationR\bin\Debug\net48\FoundationR.exe</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -56,14 +56,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Textures\tile.rew">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="build.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FoundationR\FoundationR.csproj">
-      <Project>{0b03d88d-46eb-48c8-9c02-32d6dc137049}</Project>
-      <Name>FoundationR</Name>
+    <ProjectReference Include="..\cotfAPI\cotfAPI.csproj">
+      <Project>{86df94c8-d395-40ac-97c9-daa091de8ea4}</Project>
+      <Name>cotfAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
