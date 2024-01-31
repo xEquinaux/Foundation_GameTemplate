@@ -38,7 +38,22 @@ namespace cotf
         internal Main()
         {
             Instance = this;
+        }
+        public override void RegisterHooks()
+        {
             UI.Button.ButtonClickEvent += Button_ButtonClickEvent;
+            Foundation.InitializeEvent += Initialize;
+            //Foundation.MainMenuEvent += Program_MainMenuEvent;
+            //Foundation.LoadResourcesEvent += Program_LoadResourcesEvent;
+            //Foundation.PreDrawEvent += Program_PreDrawEvent;
+            //Foundation.DrawEvent += Program_DrawEvent;
+            //Foundation.UpdateEvent += Program_UpdateEvent;
+            //Foundation.CameraEvent += Program_CameraEvent;
+        }
+
+        public void Initialize(InitializeArgs e)
+        {
+
         }
 
         private void Button_ButtonClickEvent(object sender, UI.ButtonEventArgs e)
