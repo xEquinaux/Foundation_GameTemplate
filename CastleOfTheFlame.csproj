@@ -35,7 +35,7 @@
   <ItemGroup>
     <Reference Include="FoundationR, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\FoundationR\bin\Debug\net48\FoundationR.exe</HintPath>
+      <HintPath>..\FoundationR\bin\Release\net48\FoundationR.exe</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

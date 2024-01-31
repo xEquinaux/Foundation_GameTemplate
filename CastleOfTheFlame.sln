@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "getImageHeader", "..\getIma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cotf", "..\cotf\cotf.csproj", "{7A20BA1A-29CB-47AC-B088-EFB29EB87086}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoundationR", "..\FoundationR\FoundationR.csproj", "{B43A2B14-E280-42C7-9C93-E647E4BF723E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{7A20BA1A-29CB-47AC-B088-EFB29EB87086}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A20BA1A-29CB-47AC-B088-EFB29EB87086}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A20BA1A-29CB-47AC-B088-EFB29EB87086}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B43A2B14-E280-42C7-9C93-E647E4BF723E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B43A2B14-E280-42C7-9C93-E647E4BF723E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B43A2B14-E280-42C7-9C93-E647E4BF723E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B43A2B14-E280-42C7-9C93-E647E4BF723E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

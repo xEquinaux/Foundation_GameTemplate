@@ -311,7 +311,7 @@ namespace cotf
             float max = (float)Math.Round(myPlayer.velocity.MaxNormal(), 3);
             // Player resting 
             //  TODO, make TimeScale player-proximity based
-            if (!myPlayer.IsMoving() && myPlayer.KeyDown(Keys.R))
+            if (!myPlayer.IsMoving() && myPlayer.KeyDown(Key.R))
             {
                 scale = 1.2f;
                 if (myPlayer.KeyDown(Key.Space))
@@ -409,10 +409,10 @@ namespace cotf
             //EscState = Keyboard.GetState().IsKeyDown(Keys.Escape);
             timeSpan = TimeSpan.FromMilliseconds(time.ElapsedMilliseconds);
             var point = System.Windows.Forms.Cursor.Position;
-            MouseScreen = new Vector2(Math.Max(point.X - (float)Game.Position.X, 0f), Math.Max(point.Y - (float)Game.Position.Y, 0f));//  -7 to X coord, -30 to Y coord due to WPF factor
+            MouseScreen = new Vector2(Math.Max(point.X - (float)Position.X, 0f), Math.Max(point.Y - (float)Position.Y, 0f));//  -7 to X coord, -30 to Y coord due to WPF factor
             MouseWorld = MouseScreen + new Vector2(WorldZero.X, WorldZero.Y);
-            pressO = ticks3++ == 1 && myPlayer.KeyDown(Keys.O);
-            if (Keyboard.GetState().IsKeyUp(Keys.O))
+            pressO = ticks3++ == 1 && myPlayer.KeyDown(Key.O);
+            if (myPlayer.KeyUp(Key.O))
                 ticks3 = 0;
             mouseLeft = ticks++ == 1 && LeftMouse();
             if (!LeftMouse())
@@ -434,8 +434,8 @@ namespace cotf
         }
         public override void PreDraw(RewBatch rew)
         {
-            InitDraw(graphics);
-            if (!open) return true;
+            InitDraw(rew);
+            if (!open) return;
             int width = 640;
             int height = 480;
             int x = ScreenWidth / 2 - width / 2 - (int)ScreenX;
@@ -443,13 +443,13 @@ namespace cotf
             Rectangle bound = new Rectangle(x, y, width, height);
             Rectangle inventory = new Rectangle(x + 20, y + 20, width / 2 - 20, height - 40);
 
-            graphics.DrawImageUnscaledAndClipped(bg, bound);
-            graphics.DrawRectangle(Pens.White, inventory);
+            rew.Draw(bg, bound.X, bound.Y);
+            //graphics.DrawRectangle(Pens.White, inventory);
 
             int index = 0;
             for (int i = 0; i < myPlayer.equipment.Length; i++)
             {
-                Rectangle box;
+                Rectangle box = default;
                 int X = x + 25;
                 int Y = y + 25 + (Item.DrawSize + 4) * i;
                 int newX = X;
@@ -460,12 +460,14 @@ namespace cotf
                     index = -8;
                     newY = y + 25 + (Item.DrawSize + 4) * (i + index);
                 }
-                graphics.DrawRectangle(Pens.GhostWhite, box = new Rectangle(newX, newY, Item.DrawSize, Item.DrawSize));
+                //graphics.DrawRectangle(Pens.GhostWhite, box = new Rectangle(newX, newY, Item.DrawSize, Item.DrawSize));
+                box = new Rectangle(newX, newY, Item.DrawSize, Item.DrawSize);
                 if (myPlayer.equipment[i] != null && myPlayer.equipment[i].active && myPlayer.equipment[i].equipped && myPlayer.equipment[i].owner == myPlayer.whoAmI)
                 {
                     int w = (int)Helper.RatioConvert(Helper.Ratio(Item.DrawSize, myPlayer.equipment[i].texture.Width), myPlayer.equipment[i].texture.Width);
                     Rectangle slot = new Rectangle(box.X + 1, box.Y + 1, Item.DrawSize - 1, w - 1);
-                    Drawing.DrawScale(myPlayer.equipment[i].texture, new Vector2(slot.X, slot.Y), slot.Width, slot.Height, Color.Green, graphics, Drawing.SetColor(myPlayer.equipment[i].defaultColor));
+                    rew.Draw(myPlayer.equipment[i].texture, slot.X, slot.Y);
+                    //Drawing.DrawScale(myPlayer.equipment[i].texture, new Vector2(slot.X, slot.Y), slot.Width, slot.Height, Color.Green, graphics, Drawing.SetColor(myPlayer.equipment[i].defaultColor));
                     //graphics.DrawImage(myPlayer.equipment[i].texture, slot);
                 }
             }
