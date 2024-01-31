@@ -7,30 +7,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using cotf.Assets;
 using cotf.Base;
 using cotf.ID;
 using cotf.World;
 using cotf.World.Traps;
 using cotf.Collections;
 using System.Diagnostics;
-using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
 using Color = System.Drawing.Color;
 using Rectangle = System.Drawing.Rectangle;
-using tUserInterface.Extension;
 using Helper = cotf.Base.Helper;
 using System.Xml.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Security.Cryptography;
 using System.Runtime.Versioning;
-using Microsoft.Xna.Framework.Graphics;
 using System.Drawing.Imaging;
-using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using Bitmap = System.Drawing.Bitmap;
-using System.Reflection.Metadata;
 using FoundationR;
 using System.Numerics;
 using System.IO;
@@ -58,7 +48,7 @@ namespace cotf
         //private System.Windows.Forms.Form surface;
         public static System.Windows.Input.KeyboardDevice keyboard;
         public static System.Windows.Input.MouseDevice mouse;
-        internal static Image
+        internal static REW
             texture,
             texture90,
             bg,
@@ -70,8 +60,8 @@ namespace cotf
             ground,
             wall,
             bg0;
-        public static Image[] trapTexture = new Image[TrapID.Sets.Total];
-        public static Image[] chainTexture = new Image[1];
+        public static REW[] trapTexture = new REW[TrapID.Sets.Total];
+        public static REW[] chainTexture = new REW[1];
         //public static KeyStates EscState = KeyStates.None;
         public static Camera camera1 = new Camera();
         public static Vector2 MouseWorld;
@@ -177,14 +167,12 @@ namespace cotf
         public static string SavePath => Path.Combine(new[] { Environment.GetEnvironmentVariable("USERPROFILE"), "Documents", "My Games", "CotF" });
         public static string PlayerSavePath => Path.Combine(SavePath, "Players");
         public static string WorldSavePath => Path.Combine(SavePath, "World");
+        static REW titleBg;
 
         public override void Initialize()
         {
             TagCompound.SetPaths(PlayerSavePath, WorldSavePath);   //  TODO: make relative to player name
-            _Initialize();
-            {
-                _bounds = new Size(800, 600);
-            }
+            _bounds = new Size(800, 600);
             time = Stopwatch.StartNew();
             ScreenWidth = 800;
             ScreenHeight = 600;
@@ -201,27 +189,6 @@ namespace cotf
                 scroll[i] = new UI.Scroll();
             worldgen = new Worldgen();
             var box = CenterBox(ScreenWidth, ScreenHeight, 300, 75);
-            #region DEBUG
-            return;
-            Trap.NewTrap(myPlayer.X, myPlayer.Y, 32, 32, ID.TrapID.FlameGeyser);
-            textbox[0] =
-                new UI.Textbox(
-                    texture,
-                    "Debug texture",
-                    "debugging text drawing in text boxes\n" +
-                    "asdasdasdsad\n" +
-                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n" +
-                    "blah",
-                    new Vector2(0, 0),
-                    box.Width,
-                    ButtonStyle.YesNo,
-                    false,
-                    0);
-            //for (int i = 0; i < 3; i++)
-            //  Item.NewItem(myPlayer.position.X, myPlayer.position.Y, 32, 32, ItemID.Purse, 255, CirclePrefect.Objects.Stash.GoldValue);
-            Item.NewItem(myPlayer.position.X + Tile.Size, myPlayer.position.Y, 32, 32, ItemID.Torch);
-            WorldObject.NewObject(myPlayer.position.X + Tile.Size, myPlayer.position.Y, 42, 42, true);
-            #endregion
         }
 
         public override bool ResizeWindow(System.Windows.Forms.Form form, RewBatch graphcis)
@@ -231,19 +198,20 @@ namespace cotf
 
         public override void LoadResources()
         {
-            Main.bg = Asset<Image>.Request("bg");
-            Main.texture = Asset<Image>.Request("temp");
-            Main.texture90 = Asset<Image>.Request("temp90");
-            Main.pixel = Asset<Image>.Request("pixel");
-            Main.fow = Asset<Image>.Request("fow");
-            Main.fow50 = Asset<Image>.Request("fow50");
-            Main.square = Asset<Image>.Request("background");
-            Main.grass = Asset<Image>.Request("small");
+            Main.bg = Asset<REW>.Load("bg");
+            Main.texture = Asset<REW>.Load("temp");
+            Main.texture90 = Asset<REW>.Load("temp90");
+            Main.pixel = Asset<REW>.Load("pixel");
+            Main.fow = Asset<REW>.Load("fow");
+            Main.fow50 = Asset<REW>.Load("fow50");
+            Main.square = Asset<REW>.Load("background");
+            Main.grass = Asset<REW>.Load("small");
             for (int i = 0; i < Main.trapTexture.Length; i++)
             {
                 Main.trapTexture[i] = Main.texture90;
             }
-            Main.chainTexture[0] = Asset<Image>.Request("chain");
+            Main.chainTexture[0] = Asset<REW>.Load("chain");
+            titleBg = REW.Create(_bounds.Width, _bounds.Height, Color.Black, System.Windows.Media.PixelFormats.Bgr32);
         }
 
         public override void Update()
@@ -259,7 +227,7 @@ namespace cotf
                         //{
                         //    Main.player[i]?.Save(false);
                         //}
-                        Exit();
+                        Environment.Exit(0);
                     }
                 }
             }
@@ -267,8 +235,8 @@ namespace cotf
             {
                 Main.KeyPressTimer = 0;
             }
-            Main.keyboard = Keyboard.GetState();
-            if (Main.myPlayer.KeyDown(Keys.Escape))
+            Main.keyboard = Keyboard.PrimaryDevice;
+            if (Main.myPlayer.KeyDown(Key.Escape))
             {
                 if (Main.KeyPressTimer == 0)
                 {
@@ -283,7 +251,7 @@ namespace cotf
             {
                 Main.KeyPressTimer = 0;
             }
-            if (Main.myPlayer.KeyDown(Keys.Space))
+            if (Main.myPlayer.KeyDown(Key.Space))
                 Main.mainMenu = false;
             if (!Main.mainMenu)
             {
@@ -303,28 +271,9 @@ namespace cotf
             }
             if (!Main.mainMenu && !Main.open)
             {
-                using (Bitmap bmp = new Bitmap(_bounds.Width, _bounds.Height))
-                {
-                    var transparent = System.Drawing.Color.FromArgb(20, 20, 20);
-                    using (Graphics graphics = Graphics.FromImage(bmp))
-                    {
-                        graphics.Clear(transparent);
-                        SetQuality(graphics, new System.Drawing.Rectangle(0, 0, _bounds.Width, _bounds.Height));
-                        {
-                            Main.myPlayer.playerData?.Draw(graphics);
-                            Main.Instance.DrawOverlays(graphics);
-                            //graphics.DrawString(gameTime.ElapsedGameTime.Milliseconds.ToString(), Main.DefaultFont, Brushes.White, PointF.Empty);
-                        }
-                    }
-                    bmp.MakeTransparent(transparent);
-                    using (MemoryStream stream = new MemoryStream())
-                    {
-                        bmp.Save(stream, ImageFormat.Png);
-                        Texture2D surface = Texture2D.FromStream(_graphicsMngr.GraphicsDevice, stream);
-                        _spriteBatch.Draw(surface, Vector2.Zero, Color.White);
-                        surface.Dispose();
-                    }
-                }
+                var transparent = System.Drawing.Color.FromArgb(20, 20, 20);
+                Main.myPlayer.playerData?.Draw(rew);
+                Main.Instance.DrawOverlays(rew);
             }
             //cotf.World.FogMethods.DrawEffect(fog, _spriteBatch);
         }
@@ -333,25 +282,19 @@ namespace cotf
         {
             if (mainMenu)
             {
-                graphics.FillRectangle(Brushes.Black, new Rectangle(0, 0, ScreenWidth, ScreenHeight));
-                graphics.DrawString("Alpha", System.Drawing.SystemFonts.DefaultFont, System.Drawing.Brushes.Red, 10, 30);
+                graphics.Draw(titleBg, 0, 0);
+                //graphics.DrawString("Alpha", System.Drawing.SystemFonts.DefaultFont, System.Drawing.Brushes.Red, 10, 30);
             }
         }
         public override void Camera(CameraArgs e)
         {
             if (Main.camera1 == null || Main.mainMenu)
                 return;
-            Main.Instance.Camera(Main.camera1);
             if (Main.camera1.follow && Main.camera1.isMoving)
             {
                 Main.ScreenX = (int)-Main.camera1.position.X + Main.ScreenWidth / 2 - Main.myPlayer.width;
                 Main.ScreenY = (int)-Main.camera1.position.Y + Main.ScreenHeight / 2 - Main.myPlayer.height;
             }
-            graphics.RenderingOrigin = new System.Drawing.Point((int)Main.camera1.position.X, (int)Main.camera1.position.Y);
-            graphics.TranslateTransform(
-                Main.ScreenX,
-                Main.ScreenY,
-                MatrixOrder.Append);
             Main.camera1.oldPosition = Main.camera1.position;
         }
         internal static string setMapName(string name, int num)
@@ -360,7 +303,7 @@ namespace cotf
         }
         public static bool DoesMapExist(string name, int num)
         {
-            return File.Exists(Path.Combine(Game.WorldSavePath, $"null{name}{num}"));
+            return File.Exists(Path.Combine(WorldSavePath, $"null{name}{num}"));
         }
         private static float timeScale()
         {
@@ -371,7 +314,7 @@ namespace cotf
             if (!myPlayer.IsMoving() && myPlayer.KeyDown(Keys.R))
             {
                 scale = 1.2f;
-                if (myPlayer.KeyDown(Keys.Space))
+                if (myPlayer.KeyDown(Key.Space))
                 { 
                     scale = 2f;
                 }
@@ -379,7 +322,7 @@ namespace cotf
             }
             if (myPlayer.IsMoving())
                 return Math.Min(1f / (max / Player.maxSpeed), 1f);
-            else if (myPlayer.KeyDown(Keys.Space))
+            else if (myPlayer.KeyDown(Key.Space))
             {
                 return 1f;
             }
@@ -902,7 +845,7 @@ namespace cotf
                 }
             }
         }
-        internal void DrawOverlays(Graphics graphics)
+        internal void DrawOverlays(RewBatch graphics)
         {
             for (int i = 0; i < CombatText.text.Count; i++)
             {

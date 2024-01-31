@@ -9,6 +9,7 @@ using System.Windows.Input;
 using cotf.Assets;
 using cotf.Base;
 using cotf.World;
+using FoundationR;
 using Microsoft.Xna.Framework;
 using Color = System.Drawing.Color;
 using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
@@ -268,7 +269,7 @@ namespace cotf
                     }
                 }
             }
-            public void Draw(Graphics graphics)
+            public void Draw(RewBatch graphics)
             {
                 this.Init(graphics);
                 if (active)

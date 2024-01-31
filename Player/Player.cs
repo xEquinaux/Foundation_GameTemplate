@@ -593,11 +593,11 @@ namespace cotf
                 return Rectangle.Empty;
             return new Rectangle((int)position.X, (int)position.Y, width, height);
         }
-        public bool KeyUp(Keys key)
+        public bool KeyUp(Key key)
         {
             return Main.keyboard.IsKeyUp(key);
         }
-        public bool KeyDown(Keys key)
+        public bool KeyDown(Key key)
         {
             return Main.keyboard.IsKeyDown(key);
         }
@@ -607,7 +607,7 @@ namespace cotf
         }
         public bool IsControlMove()
         {
-            return KeyDown(Keys.W) || KeyDown(Keys.A) || KeyDown(Keys.S) || KeyDown(Keys.D);
+            return KeyDown(Key.W) || KeyDown(Key.A) || KeyDown(Key.S) || KeyDown(Key.D);
         }
         public ControlType GetControlType()
         {

@@ -1,0 +1,25 @@
+﻿2018 Started with GenEngine internal name for drawing Terraria world tile data
+> With it the team developed several biomes, first drawing the Tile data as Pixel values and seeing its output before porting it into Archaea Mod
+> It was considered that the buffer used to draw the output could be updated in realtime
+2019 Created a basic graphics drawing design in System.Drawing and Dispatcher.BeginInvoke but it had low performance
+> This was primarily a demo of collision detection
+> The loops were slow and there was no multithreading for anything granted Bitmaps are not thread safe
+> Viewport configuration was done as well
+2020 Developed a demo in MonoGame that ran well, but wanted more control over the lighting effects
+> It turned out pretty well, and it was highly efficient with infinite level generation
+> This was better than expected and pretty feature complete, but the UI was pretty awful
+> It also crashed when running the DEBUG inventory function oddly enough
+2021 Went back to System.Drawing and designed a major portion of the project in an updated engine (GenEngine still), still low performance
+> This turned into a completely different project featuring a new lighting backend, and it consequently ran pretty slowly
+> The lighting was updated with a pre rendering of static light objects that took nearby textures and manipulated them
+> There was even a bit of occlusion based on the two corners of Tiles that were inbetween the closest and furthest if you can imagine
+2023 Ported the entirety of the project into MonoGame and used primarily System.Drawing still, but pipe the entire buffer into a Texture2D object
+> The Texture2D work was basically through a Bitmap.FromMemory granted Texture2D can save to Streams
+> Other work on the lighting was masking circles over lighting objects and the composite work was successful
+> An error graphic was written for missing textures, and it was procedural so as to fit the resolution sizes of any Bitmap
+2024 Developed REWD with the REW file format with a highly improved drawing pipeline as opposed to GenEngine's System.Drawing.Graphics buffer
+> The REWD project basically stood for Remote Electronics Workspace Development
+> Instead of drawing Bitmaps through System.Drawing it was decided to draw straight to a Window handle like GenEngine originally did
+> The REW file format was meant to provide an alternative to Bitmaps and be thread safe
+> Since Bitmap.GetPixel and SetPixel was considered slow, REW handled it differently but in a similar way
+> REWD draws in 32bit-RBGA format Bitmaps and the REW format itself stores a pixel array
