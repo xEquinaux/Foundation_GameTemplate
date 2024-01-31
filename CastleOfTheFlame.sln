@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cotfAPI", "..\cotfAPI\cotfA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "getImageHeader", "..\getImageHeader\getImageHeader.csproj", "{717B3DAC-F9EB-425F-9ED3-E70DBF234047}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cotf", "..\cotf\cotf.csproj", "{7A20BA1A-29CB-47AC-B088-EFB29EB87086}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{717B3DAC-F9EB-425F-9ED3-E70DBF234047}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{717B3DAC-F9EB-425F-9ED3-E70DBF234047}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{717B3DAC-F9EB-425F-9ED3-E70DBF234047}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A20BA1A-29CB-47AC-B088-EFB29EB87086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A20BA1A-29CB-47AC-B088-EFB29EB87086}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A20BA1A-29CB-47AC-B088-EFB29EB87086}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A20BA1A-29CB-47AC-B088-EFB29EB87086}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
