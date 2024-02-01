@@ -1,23 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using PixelFormats = System.Windows.Media.PixelFormats;
-using cotf;
 using FoundationR;
-using Microsoft.Win32;
 
-namespace CastleOfTheFlame
+namespace Foundation_GameTemplate
 {
     internal class Program
     {
+        static int StartX => 0;
+        static int StartY => 0;
+        static int Width => 640;
+        static int Height => 480;
+        static int BitsPerPixel => 32;
+        static string Title = "Foundation_GameTemplate";
         static void Main(string[] args)
         {
-            CastleOfTheFlame.Main m = null;
-            Thread t = new Thread(() => { (m = new Main()).Run(new Surface(0, 0, 640, 480, "Castle of the Flame")); });
+            Foundation_GameTemplate.Main m = null;
+            Thread t = new Thread(() => { (m = new Main()).Run(new FoundationR.Surface(StartX, StartY, Width, Height, Title, BitsPerPixel)); });
             t.SetApartmentState(ApartmentState.STA);
             t.Start();
             while (Console.ReadLine() != "exit");
@@ -30,25 +28,50 @@ namespace CastleOfTheFlame
         internal Main()
         {
         }
-        public override void Initialize()
+
+        public override void RegisterHooks()
         {
-            Lamp.NewLamp(80, 80, 200, Color.Orange, true);
+            Foundation.UpdateEvent += Update;
+            Foundation.ResizeEvent += Resize;
+            Foundation.DrawEvent += Draw;
+            Foundation.InitializeEvent += Initialize;
+            Foundation.LoadResourcesEvent += LoadResources;
+            Foundation.MainMenuEvent += MainMenu;
+            Foundation.PreDrawEvent += PreDraw;
+            Foundation.CameraEvent += Camera;
         }
-        public override void LoadResources()
-        {
-            Lib.SetDimensions(640, 480);
-            Lib.Initialize(8, new Size(20, 20));
-            Texture.GenerateColorTextureFiles(Tile.Instance.TexturePrefix, Color.Gray, new Size(20, 20));
-            Texture.GenerateColorTextureFiles(cotf.Background.Instance.TexturePrefix, Color.DarkGray, new Size(20, 20));
-            Lib.InitArray();
-        }
-        public override void Update()
+
+        protected void Camera(CameraArgs e)
         {
         }
-        public override void Draw(RewBatch rewBatch)
+
+        protected void PreDraw(PreDrawArgs e)
         {
-            rewBatch.Draw(REW.Extract((Bitmap)Bitmap.FromFile(@"C:\Users\nolan\Pictures\frame_splashed_by_nolantheturtle_d2u6wkk-fullview.jpg"), 32), 0, 0);
-            rewBatch.Draw(REW.Extract((Bitmap)Bitmap.FromFile(@"C:\Users\nolan\source\repos\test_env\Textures\bluepane.png"), 32), 0, 0);
+        }
+
+        protected void MainMenu(DrawingArgs e)
+        {
+        }
+
+        protected void LoadResources()
+        {
+        }
+
+        protected void Initialize(InitializeArgs e)
+        {
+        }
+
+        protected void Draw(DrawingArgs e)
+        {
+        }
+
+        protected new bool Resize()
+        {
+            return false;
+        }
+
+        protected void Update(UpdateArgs e)
+        {
         }
     }
 }
