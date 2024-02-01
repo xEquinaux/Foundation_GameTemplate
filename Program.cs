@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Threading;
+using System.Threading;                      
+using System.Threading.Tasks;
 using FoundationR;
+using Microsoft.Win32;
 
 namespace Foundation_GameTemplate
 {
@@ -67,11 +69,48 @@ namespace Foundation_GameTemplate
 
         protected new bool Resize()
         {
+            Foundation.UpdateEvent += Update;
+            Foundation.ResizeEvent += Resize;
+            Foundation.DrawEvent += Draw;
+            Foundation.InitializeEvent += Initialize;
+            Foundation.LoadResourcesEvent += LoadResources;
+            Foundation.MainMenuEvent += MainMenu;
+            Foundation.PreDrawEvent += PreDraw;
+            Foundation.CameraEvent += Camera;
+        }
+
+        protected void Camera(CameraArgs e)
+        {
+        }
+
+        protected void PreDraw(PreDrawArgs e)
+        {
+        }
+
+        protected void MainMenu(DrawingArgs e)
+        {
+        }
+
+        protected void LoadResources()
+        {
+        }
+
+        protected void Initialize(InitializeArgs e)
+        {
+        }
+
+        protected void Draw(DrawingArgs e)
+        {
+        }
+
+        protected new bool Resize()
+        {
             return false;
         }
 
         protected void Update(UpdateArgs e)
-        {
+
+        protected void Update(UpdateArgs e)
         }
     }
 }

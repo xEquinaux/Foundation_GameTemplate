@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{256EA174-50EE-46A3-9EA4-3EFDC4BF23B4}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>CastleOfTheFlame</RootNamespace>
-    <AssemblyName>CastleOfTheFlame</AssemblyName>
+    <RootNamespace>Foundation_GameTemplate</RootNamespace>
+    <AssemblyName>Foundation_GameTemplate</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
