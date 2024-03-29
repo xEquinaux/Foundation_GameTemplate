@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading;                      
 using System.Threading.Tasks;
 using FoundationR;
@@ -27,6 +28,7 @@ namespace Foundation_GameTemplate
     }
     public class Main : Foundation
     {
+        REW pane;
         internal Main()
         {
         }
@@ -57,6 +59,7 @@ namespace Foundation_GameTemplate
 
         protected void LoadResources()
         {
+            Asset.LoadFromFile(@".\Textures\pane.rew", out pane);
         }
 
         protected void Initialize(InitializeArgs e)
@@ -65,52 +68,16 @@ namespace Foundation_GameTemplate
 
         protected void Draw(DrawingArgs e)
         {
+            e.rewBatch.Draw(pane, 0, 0);
         }
 
-        protected new bool Resize()
-        {
-            Foundation.UpdateEvent += Update;
-            Foundation.ResizeEvent += Resize;
-            Foundation.DrawEvent += Draw;
-            Foundation.InitializeEvent += Initialize;
-            Foundation.LoadResourcesEvent += LoadResources;
-            Foundation.MainMenuEvent += MainMenu;
-            Foundation.PreDrawEvent += PreDraw;
-            Foundation.CameraEvent += Camera;
-        }
-
-        protected void Camera(CameraArgs e)
+        protected void Update(UpdateArgs e)
         {
         }
-
-        protected void PreDraw(PreDrawArgs e)
-        {
-        }
-
-        protected void MainMenu(DrawingArgs e)
-        {
-        }
-
-        protected void LoadResources()
-        {
-        }
-
-        protected void Initialize(InitializeArgs e)
-        {
-        }
-
-        protected void Draw(DrawingArgs e)
-        {
-        }
-
+        
         protected new bool Resize()
         {
             return false;
-        }
-
-        protected void Update(UpdateArgs e)
-
-        protected void Update(UpdateArgs e)
         }
     }
 }
