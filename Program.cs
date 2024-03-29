@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
+using System.Numerics;
 using System.Threading;                      
 using System.Threading.Tasks;
+using System.Windows.Diagnostics;
+using System.Windows.Forms;
 using FoundationR;
 using Microsoft.Win32;
 
@@ -18,7 +22,7 @@ namespace Foundation_GameTemplate
         static void Main(string[] args)
         {
             Foundation_GameTemplate.Main m = null;
-            Thread t = new Thread(() => { (m = new Main()).Run(new FoundationR.Surface(StartX, StartY, Width, Height, Title, BitsPerPixel)); });
+            Thread t = new Thread(() => { (m = new Main()).Run(SurfaceType.WindowHandle_Loop, new FoundationR.Surface(StartX, StartY, Width, Height, Title, BitsPerPixel)); });
             t.SetApartmentState(ApartmentState.STA);
             t.Start();
             while (Console.ReadLine() != "exit");
@@ -28,7 +32,12 @@ namespace Foundation_GameTemplate
     }
     public class Main : Foundation
     {
+        System.Drawing.Point mouse;
+        WindowUtils.RECT window_frame;
         REW pane;
+        REW tile;
+        REW cans;
+        REW solidColor;
         internal Main()
         {
         }
@@ -37,6 +46,7 @@ namespace Foundation_GameTemplate
         {
             Foundation.UpdateEvent += Update;
             Foundation.ResizeEvent += Resize;
+            Foundation.InputEvent += Input;
             Foundation.DrawEvent += Draw;
             Foundation.InitializeEvent += Initialize;
             Foundation.LoadResourcesEvent += LoadResources;
@@ -59,7 +69,9 @@ namespace Foundation_GameTemplate
 
         protected void LoadResources()
         {
-            Asset.LoadFromFile(@".\Textures\pane.rew", out pane);
+            Asset.LoadFromFile(@".\Textures\bluepane.rew", out pane);
+            Asset.LoadFromFile(@".\Textures\background.rew", out tile);
+            Asset.LoadFromFile(@".\Textures\cans.rew", out cans);
         }
 
         protected void Initialize(InitializeArgs e)
@@ -68,7 +80,15 @@ namespace Foundation_GameTemplate
 
         protected void Draw(DrawingArgs e)
         {
-            e.rewBatch.Draw(pane, 0, 0);
+            e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4)), 0, 0);
+            e.rewBatch.Draw(REW.Create(50, 50, Color.Red, Ext.GetFormat(4)), 50, 0);
+            e.rewBatch.Draw(REW.Create(50, 50, Color.Green, Ext.GetFormat(4)), 100, 0);
+            e.rewBatch.Draw(REW.Create(50, 50, Color.Blue, Ext.GetFormat(4)), 150, 0);
+        }
+
+        protected void Input(InputArgs e)
+        {
+            mouse = e.mouse;
         }
 
         protected void Update(UpdateArgs e)
