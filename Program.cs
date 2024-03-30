@@ -82,6 +82,7 @@ namespace Foundation_GameTemplate
         {
             e.rewBatch.Draw(cans, 0, 0);
             e.rewBatch.Draw(pane, 0, 0);
+            e.rewBatch.Draw(tile, mouse.X, mouse.Y);
             e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4)), 0, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Red, Ext.GetFormat(4)), 50, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Green, Ext.GetFormat(4)), 100, 0);
