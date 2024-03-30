@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Diagnostics;
 using System.Windows.Forms;
+using System.Windows.Input;
 using FoundationR;
 using Microsoft.Win32;
 
@@ -32,7 +33,7 @@ namespace Foundation_GameTemplate
     }
     public class Main : Foundation
     {
-        System.Drawing.Point mouse;
+        Point player_position;
         WindowUtils.RECT window_frame;
         REW pane;
         REW tile;
@@ -53,6 +54,10 @@ namespace Foundation_GameTemplate
             Foundation.MainMenuEvent += MainMenu;
             Foundation.PreDrawEvent += PreDraw;
             Foundation.CameraEvent += Camera;
+        }
+
+        protected void Input(InputArgs e)
+        {
         }
 
         protected void Camera(CameraArgs e)
@@ -80,10 +85,7 @@ namespace Foundation_GameTemplate
 
         protected void Draw(DrawingArgs e)
         {
-            for (int i = 0; i < 10; i++)
-                for (int j = 0; j < 10; j++)
-                    e.rewBatch.Draw(tile, i * 50, j * 50);
-            e.rewBatch.Draw(tile, mouse.X, mouse.Y);
+            e.rewBatch.Draw(tile, player_position.X, player_position.Y);
             e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4)), 0, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Red, Ext.GetFormat(4)), 50, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Green, Ext.GetFormat(4)), 100, 0);
@@ -93,11 +95,6 @@ namespace Foundation_GameTemplate
             e.rewBatch.DrawString("Arial", "Test_value_01", 50, 50, 200, 100);
         }
 
-        protected void Input(InputArgs e)
-        {
-            mouse = e.mouse;
-        }
-
         protected void Update(UpdateArgs e)
         {
         }
@@ -105,6 +102,11 @@ namespace Foundation_GameTemplate
         protected new bool Resize()
         {
             return false;
+        }
+
+        new bool KeyDown(Key k)
+        {
+            return Keyboard.PrimaryDevice.IsKeyDown(k);
         }
     }
 }
