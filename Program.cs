@@ -62,6 +62,37 @@ namespace Foundation_GameTemplate
 
         protected void Camera(CameraArgs e)
         {
+            // Assume you have an image represented as a byte array 'imageBytes'
+            // Each pixel is stored as ARGB (4 bytes per pixel)
+            byte[] imageBytes = e.backBuffer;
+                                    
+            for (int y = 0; y < e.screen.Height; y++)
+            {
+                for (int x = 0; x < e.screen.Width; x++)
+                {
+                    // Calculate the index in the byte array for the current pixel
+                    int index = (y * e.screen.Width + x) * 4;
+                                                
+                    // Extract ARGB values
+                    byte alpha = imageBytes[index];
+                    byte red = imageBytes[index + 1];
+                    byte green = imageBytes[index + 2];
+                    byte blue = imageBytes[index + 3];
+
+                    // Map ARGB values to screen coordinates (x_screen, y_screen)
+                    // You can use linear interpolation or other techniques here
+                    int x_screen = 100;
+                    int y_screen = 100;
+                    index = (y * e.screen.Width + x) * 4;
+
+                    // Set the transformed pixel back into the image
+                    imageBytes[index] = alpha;
+                    imageBytes[index + 1] = red;
+                    imageBytes[index + 2] = green;
+                    imageBytes[index + 3] = blue;
+                }
+            }
+            e.backBuffer = imageBytes;
         }
 
         protected void PreDraw(PreDrawArgs e)
@@ -92,7 +123,7 @@ namespace Foundation_GameTemplate
             e.rewBatch.Draw(REW.Create(50, 50, Color.Blue, Ext.GetFormat(4)), 150, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Gray, Ext.GetFormat(4)), 200, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Black, Ext.GetFormat(4)), 250, 0);
-            e.rewBatch.DrawString("Arial", "Test_value_01", 50, 50, 200, 100);
+            e.rewBatch.DrawString("Arial", "Test_value_01", 50, 50, 200, 100, Color.White);
         }
 
         protected void Update(UpdateArgs e)

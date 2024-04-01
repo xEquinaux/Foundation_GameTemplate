@@ -50,9 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asset.cs" />
-    <Compile Include="Global\Entity.cs" />
-    <Compile Include="Global\Global.cs" />
-    <Compile Include="Player\Wurm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -70,9 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="build.txt" />
-    <Content Include="Player\Hatchling_body.png" />
-    <Content Include="Player\Hatchling_head.png" />
-    <Content Include="Player\Hatchling_tail.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FoundationR\FoundationR.csproj">
