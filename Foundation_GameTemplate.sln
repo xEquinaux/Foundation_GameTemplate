@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foundation_GameTemplate", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoundationR", "..\FoundationR\FoundationR.csproj", "{2A3EBB06-34CC-48F7-B587-6A547B53828D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cotf_rewd", "..\cotf-demo\cotf_rewd.csproj", "{2092A5EA-DA9C-4053-A8B6-90C240192CC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cotf_rewd", "..\cotf-rewd\cotf_rewd.csproj", "{2092A5EA-DA9C-4053-A8B6-90C240192CC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
