@@ -82,38 +82,6 @@ namespace Foundation_GameTemplate
             {
                 e.CAMERA.position.Y++;
             }
-            return;
-            // Assume you have an image represented as a byte array 'imageBytes'
-            // Each pixel is stored as ARGB (4 bytes per pixel)
-            byte[] imageBytes = e.backBuffer;
-                                    
-            for (int y = 0; y < e.screen.Height; y++)
-            {
-                for (int x = 0; x < e.screen.Width; x++)
-                {
-                    // Calculate the index in the byte array for the current pixel
-                    int index = (y * e.screen.Width + x) * 4;
-                                                
-                    // Extract ARGB values
-                    byte alpha = imageBytes[index];
-                    byte red = imageBytes[index + 1];
-                    byte green = imageBytes[index + 2];
-                    byte blue = imageBytes[index + 3];
-
-                    // Map ARGB values to screen coordinates (x_screen, y_screen)
-                    // You can use linear interpolation or other techniques here
-                    int x_screen = (int)e.CAMERA.position.X;
-                    int y_screen = (int)e.CAMERA.position.Y;
-                    index = ((y + y_screen) * e.screen.Width + (x + x_screen)) * 4;
-
-                    // Set the transformed pixel back into the image
-                    imageBytes[index] = alpha;
-                    imageBytes[index + 1] = red;
-                    imageBytes[index + 2] = green;
-                    imageBytes[index + 3] = blue;
-                }
-            }
-            e.backBuffer = imageBytes;
         }
 
         protected void PreDraw(PreDrawArgs e)
