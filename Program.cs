@@ -33,7 +33,7 @@ namespace Foundation_GameTemplate
     }
     public class Main : Foundation
     {
-        Point player_position;
+        Point mouse;
         WindowUtils.RECT window_frame;
         REW pane;
         REW tile;
@@ -58,10 +58,20 @@ namespace Foundation_GameTemplate
 
         protected void Input(InputArgs e)
         {
+            mouse = e.mouse;
         }
 
         protected void Camera(CameraArgs e)
         {
+            if (KeyDown(Key.D))
+            {
+                e.CAMERA.position.X++;
+            }
+            if (KeyDown(Key.A))
+            {
+                e.CAMERA.position.X--;
+            }
+            return;
             // Assume you have an image represented as a byte array 'imageBytes'
             // Each pixel is stored as ARGB (4 bytes per pixel)
             byte[] imageBytes = e.backBuffer;
@@ -81,9 +91,9 @@ namespace Foundation_GameTemplate
 
                     // Map ARGB values to screen coordinates (x_screen, y_screen)
                     // You can use linear interpolation or other techniques here
-                    int x_screen = 100;
-                    int y_screen = 100;
-                    index = (y * e.screen.Width + x) * 4;
+                    int x_screen = (int)e.CAMERA.position.X;
+                    int y_screen = (int)e.CAMERA.position.Y;
+                    index = ((y + y_screen) * e.screen.Width + (x + x_screen)) * 4;
 
                     // Set the transformed pixel back into the image
                     imageBytes[index] = alpha;
@@ -116,7 +126,7 @@ namespace Foundation_GameTemplate
 
         protected void Draw(DrawingArgs e)
         {
-            e.rewBatch.Draw(tile, player_position.X, player_position.Y);
+            e.rewBatch.Draw(tile, mouse.X, mouse.Y);
             e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4)), 0, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Red, Ext.GetFormat(4)), 50, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Green, Ext.GetFormat(4)), 100, 0);
