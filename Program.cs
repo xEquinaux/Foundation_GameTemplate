@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Numerics;
 using System.Threading;                      
 using System.Threading.Tasks;
@@ -58,7 +59,9 @@ namespace Foundation_GameTemplate
 
         protected void Input(InputArgs e)
         {
-            mouse = e.mouse;
+            int x = e.mouse.X + RewBatch.Viewport.X;
+            int y = e.mouse.Y + RewBatch.Viewport.Y;
+            mouse = new Point(x, y);
         }
 
         protected void Camera(CameraArgs e)
@@ -70,6 +73,14 @@ namespace Foundation_GameTemplate
             if (KeyDown(Key.A))
             {
                 e.CAMERA.position.X--;
+            }
+            if (KeyDown(Key.W))
+            {
+                e.CAMERA.position.Y--;
+            }
+            if (KeyDown(Key.S))
+            {
+                e.CAMERA.position.Y++;
             }
             return;
             // Assume you have an image represented as a byte array 'imageBytes'
@@ -126,6 +137,7 @@ namespace Foundation_GameTemplate
 
         protected void Draw(DrawingArgs e)
         {
+            e.rewBatch.Draw(cans, 0, 0);
             e.rewBatch.Draw(tile, mouse.X, mouse.Y);
             e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4)), 0, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Red, Ext.GetFormat(4)), 50, 0);
@@ -133,6 +145,7 @@ namespace Foundation_GameTemplate
             e.rewBatch.Draw(REW.Create(50, 50, Color.Blue, Ext.GetFormat(4)), 150, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Gray, Ext.GetFormat(4)), 200, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Black, Ext.GetFormat(4)), 250, 0);
+            e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4)), 640, 50);
             e.rewBatch.DrawString("Arial", "Test_value_01", 50, 50, 200, 100, Color.White);
         }
 
