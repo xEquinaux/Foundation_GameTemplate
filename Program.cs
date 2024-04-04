@@ -121,7 +121,7 @@ namespace Foundation_GameTemplate
         {
         }
         
-        protected new bool Resize()
+        protected new bool Resize(ResizeArgs e)
         {
             return false;
         }
