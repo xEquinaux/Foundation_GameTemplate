@@ -87,6 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="build.txt" />
+    <Content Include="Direct2D_Render.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FoundationR\FoundationR.csproj">
