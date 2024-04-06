@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Threading;                      
 using System.Threading.Tasks;
 using System.Windows.Diagnostics;
@@ -21,6 +22,7 @@ namespace Foundation_GameTemplate
         static int Height => 480;
         static int BitsPerPixel => 32;
         static string Title = "Foundation_GameTemplate";
+        
         static void Main(string[] args)
         {
             Foundation_GameTemplate.Main m = null;
@@ -106,7 +108,7 @@ namespace Foundation_GameTemplate
         protected void Draw(DrawingArgs e)
         {
             e.rewBatch.Draw(cans, 0, 0);
-            //e.rewBatch.Draw(pane, 0, 0);
+            e.rewBatch.Draw(pane, 0, 0);
             e.rewBatch.Draw(tile.GetPixels(), mouse.X, mouse.Y, 50, 50);
             e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4)), 0, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Red, Ext.GetFormat(4)), 50, 0);

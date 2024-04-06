@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FoundationR\FoundationR.csproj">
-      <Project>{0b03d88d-46eb-48c8-9c02-32d6dc137049}</Project>
+      <Project>{2a3ebb06-34cc-48f7-b587-6a547b53828d}</Project>
       <Name>FoundationR</Name>
     </ProjectReference>
   </ItemGroup>
