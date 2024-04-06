@@ -61,30 +61,14 @@ namespace Foundation_GameTemplate
 
         protected void Input(InputArgs e)
         {
-            int x = e.mouse.X + RewBatch.Viewport.X;
-            int y = e.mouse.Y + RewBatch.Viewport.Y;
+            int x = e.mousePosition.X + RewBatch.Viewport.X;
+            int y = e.mousePosition.Y + RewBatch.Viewport.Y;
             mouse = new Point(x, y);
         }
 
         protected void Camera(CameraArgs e)
         {
             return;
-            if (KeyDown(Key.D))
-            {
-                e.CAMERA.position.X++;
-            }
-            if (KeyDown(Key.A))
-            {
-                e.CAMERA.position.X--;
-            }
-            if (KeyDown(Key.W))
-            {
-                e.CAMERA.position.Y--;
-            }
-            if (KeyDown(Key.S))
-            {
-                e.CAMERA.position.Y++;
-            }
         }
 
         protected void PreDraw(PreDrawArgs e)
@@ -131,11 +115,6 @@ namespace Foundation_GameTemplate
         protected new bool Resize(ResizeArgs e)
         {
             return false;
-        }
-
-        new bool KeyDown(Key k)
-        {
-            return Keyboard.PrimaryDevice.IsKeyDown(k);
         }
     }
 }
