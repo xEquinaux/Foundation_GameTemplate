@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cotf_rewd", "..\cotf-rewd\c
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Direct2D_Render", "..\Direct2D_Render\Direct2D_Render.vcxproj", "{17E564E8-40A5-4E10-AAC6-1B5D8FDD40C4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestBed", "..\TestBed\TestBed.vcxproj", "{ACD1B289-A2F9-400D-8ED4-4F6BAB97E55B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{17E564E8-40A5-4E10-AAC6-1B5D8FDD40C4}.Release|x64.Build.0 = Release|x64
 		{17E564E8-40A5-4E10-AAC6-1B5D8FDD40C4}.Release|x86.ActiveCfg = Release|Win32
 		{17E564E8-40A5-4E10-AAC6-1B5D8FDD40C4}.Release|x86.Build.0 = Release|Win32
+		{ACD1B289-A2F9-400D-8ED4-4F6BAB97E55B}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{ACD1B289-A2F9-400D-8ED4-4F6BAB97E55B}.Debug|Any CPU.Build.0 = Debug|x64
+		{ACD1B289-A2F9-400D-8ED4-4F6BAB97E55B}.Debug|x64.ActiveCfg = Debug|x64
+		{ACD1B289-A2F9-400D-8ED4-4F6BAB97E55B}.Debug|x64.Build.0 = Debug|x64
+		{ACD1B289-A2F9-400D-8ED4-4F6BAB97E55B}.Debug|x86.ActiveCfg = Debug|Win32
+		{ACD1B289-A2F9-400D-8ED4-4F6BAB97E55B}.Debug|x86.Build.0 = Debug|Win32
+		{ACD1B289-A2F9-400D-8ED4-4F6BAB97E55B}.Release|Any CPU.ActiveCfg = Release|x64
+		{ACD1B289-A2F9-400D-8ED4-4F6BAB97E55B}.Release|Any CPU.Build.0 = Release|x64
+		{ACD1B289-A2F9-400D-8ED4-4F6BAB97E55B}.Release|x64.ActiveCfg = Release|x64
+		{ACD1B289-A2F9-400D-8ED4-4F6BAB97E55B}.Release|x64.Build.0 = Release|x64
+		{ACD1B289-A2F9-400D-8ED4-4F6BAB97E55B}.Release|x86.ActiveCfg = Release|Win32
+		{ACD1B289-A2F9-400D-8ED4-4F6BAB97E55B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
