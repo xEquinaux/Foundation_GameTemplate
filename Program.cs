@@ -68,6 +68,7 @@ namespace Foundation_GameTemplate
 
         protected void Camera(CameraArgs e)
         {
+            return;
             if (KeyDown(Key.D))
             {
                 e.CAMERA.position.X++;
@@ -109,7 +110,7 @@ namespace Foundation_GameTemplate
         {
             e.rewBatch.Draw(cans, 0, 0);
             e.rewBatch.Draw(pane, 0, 0);
-            e.rewBatch.Draw(tile.GetPixels(), mouse.X, mouse.Y, 50, 50);
+            //e.rewBatch.Draw(tile.GetPixels(), mouse.X, mouse.Y, 50, 50);
             e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4)), 0, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Red, Ext.GetFormat(4)), 50, 0);
             e.rewBatch.Draw(REW.Create(50, 50, Color.Green, Ext.GetFormat(4)), 100, 0);
