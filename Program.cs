@@ -56,7 +56,7 @@ namespace Foundation_GameTemplate
             Foundation.LoadResourcesEvent += LoadResources;
             Foundation.MainMenuEvent += MainMenu;
             Foundation.PreDrawEvent += PreDraw;
-            Foundation.CameraEvent += Camera;
+            Foundation.ViewportEvent += Viewport;
             Foundation.ExitEvent += Exit;
         }
 
@@ -72,7 +72,7 @@ namespace Foundation_GameTemplate
             mouse = new Point(x, y);
         }
 
-        protected void Camera(CameraArgs e)
+        protected void Viewport(ViewportArgs e)
         {
             return;
         }
