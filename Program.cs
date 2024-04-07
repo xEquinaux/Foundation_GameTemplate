@@ -37,7 +37,7 @@ namespace Foundation_GameTemplate
     public class Main : Foundation
     {
         Point mouse;
-        WindowUtils.RECT window_frame;
+        RECT window_frame;
         REW pane;
         REW tile;
         REW cans;
@@ -57,18 +57,18 @@ namespace Foundation_GameTemplate
             Foundation.MainMenuEvent += MainMenu;
             Foundation.PreDrawEvent += PreDraw;
             Foundation.CameraEvent += Camera;
-            Foundation.ExitEvent += ExitEvent;
+            Foundation.ExitEvent += Exit;
         }
 
-        protected bool ExitEvent(ExitArgs e)
+        protected bool Exit(ExitArgs e)
         {
             return false;
         }
 
         protected void Input(InputArgs e)
         {
-            int x = e.mousePosition.X + RewBatch.Viewport.X;
-            int y = e.mousePosition.Y + RewBatch.Viewport.Y;
+            int x = e.mousePosition.X + RewBatch.Viewport.X - e.windowBounds.Left;
+            int y = e.mousePosition.Y + RewBatch.Viewport.Y - e.windowBounds.Top;
             mouse = new Point(x, y);
         }
 
@@ -118,7 +118,7 @@ namespace Foundation_GameTemplate
         {
         }
         
-        protected new bool Resize(ResizeArgs e)
+        protected bool Resize(ResizeArgs e)
         {
             return false;
         }
