@@ -99,7 +99,7 @@ namespace Foundation_GameTemplate
         protected void Draw(DrawingArgs e)
         {
             e.rewBatch.Draw(cans, 0, 0);
-            e.rewBatch.Draw(pane, 0, 0);
+            //e.rewBatch.Draw(pane, 0, 0);
             if (mouse.X + 50 >= 640 || mouse.Y + 50 >= 480 || mouse.X <= 0 || mouse.Y <= 0)
                 goto COLORS;
             e.rewBatch.Draw(tile.GetPixels(), mouse.X, mouse.Y, 50, 50);
