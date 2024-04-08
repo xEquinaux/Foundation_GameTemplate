@@ -42,11 +42,12 @@ namespace Foundation_GameTemplate
         REW tile;
         REW cans;
         REW solidColor;
+        Form form;
         internal Main()
         {
         }
 
-        public override void RegisterHooks()
+        public override void RegisterHooks(Form form)
         {
             Foundation.UpdateEvent += Update;
             Foundation.ResizeEvent += Resize;
@@ -58,6 +59,7 @@ namespace Foundation_GameTemplate
             Foundation.PreDrawEvent += PreDraw;
             Foundation.ViewportEvent += Viewport;
             Foundation.ExitEvent += Exit;
+            this.form = form;
         }
 
         protected bool Exit(ExitArgs e)
@@ -67,9 +69,13 @@ namespace Foundation_GameTemplate
 
         protected void Input(InputArgs e)
         {
-            int x = e.mousePosition.X + RewBatch.Viewport.X - e.windowBounds.Left;
-            int y = e.mousePosition.Y + RewBatch.Viewport.Y - e.windowBounds.Top;
-            mouse = new Point(x, y);
+            form.Invoke(new Action(() =>
+            {
+                Point mouse = mouse = form.PointToClient(System.Windows.Forms.Cursor.Position);
+                int x = mouse.X;
+                int y = mouse.Y;
+                mouse = new Point(x + 8, y + 31);
+            }));
         }
 
         protected void Viewport(ViewportArgs e)
