@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Net.Http.Headers;
@@ -10,7 +11,13 @@ using System.Windows.Diagnostics;
 using System.Windows.Forms;
 using System.Windows.Input;
 using FoundationR;
+using FoundationR.Lib;
+using FoundationR.Rew;
+using FoundationR.Loader;
+using FoundationR.Ext;
+using FoundationR.Headers;
 using Microsoft.Win32;
+
 
 namespace Foundation_GameTemplate
 {
@@ -26,7 +33,7 @@ namespace Foundation_GameTemplate
         static void Main(string[] args)
         {
             Foundation_GameTemplate.Main m = null;
-            Thread t = new Thread(() => { (m = new Main()).Run(SurfaceType.WindowHandle_Loop, new FoundationR.Surface(StartX, StartY, Width, Height, Title, BitsPerPixel)); });
+            Thread t = new Thread(() => { (m = new Main()).Run(SurfaceType.WindowHandle_Loop, new Surface(StartX, StartY, Width, Height, Title, BitsPerPixel)); });
             t.SetApartmentState(ApartmentState.STA);
             t.Start();
             while (Console.ReadLine() != "exit");
@@ -43,6 +50,9 @@ namespace Foundation_GameTemplate
         REW cans;
         REW solidColor;
         Form form;
+        IList<Keys> keyboard = new List<Keys>();
+        bool handled = false;
+        
         internal Main()
         {
         }
@@ -59,7 +69,16 @@ namespace Foundation_GameTemplate
             Foundation.PreDrawEvent += PreDraw;
             Foundation.ViewportEvent += Viewport;
             Foundation.ExitEvent += Exit;
+            form.KeyDown += Form_KeyDown;
             this.form = form;
+        }
+
+        private void Form_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                keyboard.Add(e.KeyCode);
+            }
         }
 
         protected bool Exit(ExitArgs e)
@@ -67,19 +86,46 @@ namespace Foundation_GameTemplate
             return false;
         }
 
+        public override void ClearInput()
+        {
+            keyboard.Clear();
+            handled = false;
+        }
+
         protected void Input(InputArgs e)
         {
             form.Invoke(new Action(() =>
             {
-                Point mouse = mouse = form.PointToClient(System.Windows.Forms.Cursor.Position);
-                int x = mouse.X;
-                int y = mouse.Y;
-                mouse = new Point(x + 8, y + 31);
+                var _mouse = form.PointToClient(System.Windows.Forms.Cursor.Position);
+                int x = _mouse.X;
+                int y = _mouse.Y;
+                this.mouse = new Point(x + 8, y + 31);
             }));
         }
 
         protected void Viewport(ViewportArgs e)
         {
+            if (handled) return;
+            if (keyboard.Contains(Keys.W))
+            {
+                e.viewport.position.Y--;
+                handled = true;
+            }
+            if (keyboard.Contains(Keys.A))
+            {
+                e.viewport.position.X--;
+                handled = true;
+            }
+            if (keyboard.Contains(Keys.S))
+            {
+                e.viewport.position.Y++;
+                handled = true;
+            }
+            if (keyboard.Contains(Keys.D))
+            { 
+                e.viewport.position.X++;
+                handled = true;
+            }
             return;
         }
 
@@ -104,7 +150,7 @@ namespace Foundation_GameTemplate
 
         protected void Draw(DrawingArgs e)
         {
-            e.rewBatch.Draw(cans, 0, 0);
+            e.rewBatch.Draw(cans, RewBatch.Viewport.X, RewBatch.Viewport.X);
             //e.rewBatch.Draw(pane, 0, 0);
             if (mouse.X + 50 >= 640 || mouse.Y + 50 >= 480 || mouse.X <= 0 || mouse.Y <= 0)
                 goto COLORS;
