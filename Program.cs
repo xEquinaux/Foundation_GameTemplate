@@ -85,32 +85,37 @@ namespace Foundation_GameTemplate
 
       protected void Input(InputArgs e)
       {
-         form.Invoke(new Action(() =>
-         {
+         try
+         { 
+            form.Invoke(new Action(() =>
+            {
                var _mouse = form.PointToClient(System.Windows.Forms.Cursor.Position);
                int x = _mouse.X;
                int y = _mouse.Y;
                this.mouse = new Point(x + 8, y + 31);
-         }));
+            }));
+         }
+         catch { }
       }
 
       protected void Viewport(ViewportArgs e)
-      {
+      {      
+         return;
          if (KeyDown(Key.W))
          {
-               e.viewport.position.Y--;
+            e.viewport.position.Y--;
          }
          if (KeyDown(Key.A))
          {
-               e.viewport.position.X--;
+            e.viewport.position.X--;
          }
          if (KeyDown(Key.S))
          {
-               e.viewport.position.Y++;
+            e.viewport.position.Y++;
          }
          if (KeyDown(Key.D))
          { 
-               e.viewport.position.X++;
+            e.viewport.position.X++;
          }
       }
 
@@ -141,12 +146,12 @@ namespace Foundation_GameTemplate
                goto COLORS;
          e.rewBatch.Draw(tile.GetPixels(), mouse.X, mouse.Y, 50, 50);
          COLORS:
-         e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4)), 0, 0);
-         e.rewBatch.Draw(REW.Create(50, 50, Color.Red, Ext.GetFormat(4)), 50, 0);
-         e.rewBatch.Draw(REW.Create(50, 50, Color.Green, Ext.GetFormat(4)), 100, 0);
-         e.rewBatch.Draw(REW.Create(50, 50, Color.Blue, Ext.GetFormat(4)), 150, 0);
-         e.rewBatch.Draw(REW.Create(50, 50, Color.Gray, Ext.GetFormat(4)), 200, 0);
-         e.rewBatch.Draw(REW.Create(50, 50, Color.Black, Ext.GetFormat(4)), 250, 0);
+         e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4)), 0, 50);
+         e.rewBatch.Draw(REW.Create(50, 50, Color.Red, Ext.GetFormat(4)), 50, 50);
+         e.rewBatch.Draw(REW.Create(50, 50, Color.Green, Ext.GetFormat(4)), 100, 50);
+         e.rewBatch.Draw(REW.Create(50, 50, Color.Blue, Ext.GetFormat(4)), 150, 50);
+         e.rewBatch.Draw(REW.Create(50, 50, Color.Gray, Ext.GetFormat(4)), 200, 50);
+         e.rewBatch.Draw(REW.Create(50, 50, Color.Black, Ext.GetFormat(4)), 250, 50);
          e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4)), 640, 50);
          e.rewBatch.DrawString("Arial", "Test_value_01", 50, 50, 200, 100, Color.White);
       }
