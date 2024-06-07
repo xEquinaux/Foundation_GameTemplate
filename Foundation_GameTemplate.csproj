@@ -53,12 +53,24 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\cotf-remix\bin\Debug\net6.0-windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Native">
+      <HintPath>..\cotf-remix\lib\Native.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.4.1.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -72,6 +84,23 @@
     <Compile Include="Asset.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorldGen\Factory.cs" />
+    <None Include="packages.config" />
+    <None Include="WorldGen\Factory\DoorNPC.cs" />
+    <None Include="WorldGen\Factory\Keypad.cs" />
+    <None Include="WorldGen\Factory\Room.cs" />
+    <None Include="WorldGen\Factory\Tiles\ClosedMetalDoor.cs" />
+    <None Include="WorldGen\Factory\Tiles\FactoryTile.cs" />
+    <None Include="WorldGen\Factory\Tiles\MetalDoorOpen.cs" />
+    <None Include="WorldGen\Factory\Tiles\MetalDoorOpening.cs" />
+    <None Include="WorldGen\FortGen.cs" />
+    <None Include="WorldGen\Fortress.cs" />
+    <None Include="WorldGen\GenLegacy.cs" />
+    <None Include="WorldGen\Legacy\Backup.cs" />
+    <None Include="WorldGen\MagnoBiome.cs" />
+    <None Include="WorldGen\MagnoGen.cs" />
+    <None Include="WorldGen\MagnoV2.cs" />
+    <None Include="WorldGen\Room.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -90,6 +119,9 @@
     <Content Include="Direct2D_Render.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="WorldGen\Factory\Tiles\ClosedMetalDoor.png" />
+    <None Include="WorldGen\Factory\Tiles\MetalDoorOpen.png" />
+    <None Include="WorldGen\Factory\Tiles\MetalDoorOpening.png" />
     <None Include="TestBed.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

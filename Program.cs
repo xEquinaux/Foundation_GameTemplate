@@ -5,7 +5,7 @@ using System.IO;
 using System.Net.Http.Headers;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using System.Threading;                      
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Diagnostics;
 using System.Windows.Forms;
@@ -17,161 +17,168 @@ using FoundationR.Loader;
 using FoundationR.Ext;
 using FoundationR.Headers;
 using Microsoft.Win32;
+using cotf.WorldGen;
 
 
 namespace Foundation_GameTemplate
 {
-   internal class Program
-   {
-      static int StartX => 0;
-      static int StartY => 0;
-      static int Width => 640;
-      static int Height => 480;
-      static int BitsPerPixel => 32;
-      static string Title = "Foundation_GameTemplate";
-        
-      static void Main(string[] args)
-      {
-         Foundation_GameTemplate.Main m = null;
-         Thread t = new Thread(() => { (m = new Main()).Run(SurfaceType.WindowHandle_Loop, new Surface(StartX, StartY, Width, Height, Title, BitsPerPixel)); });
-         t.SetApartmentState(ApartmentState.STA);
-         t.Start();
-         while (Console.ReadLine() != "exit");
-         t.Abort();
-         Environment.Exit(0);
-      }
-   }
-   public class Main : Foundation
-   {
-      Point mouse;
-      RECT window_frame;
-      REW pane;
-      REW tile;
-      REW cans;
-      REW solidColor;
-      Form form;
-      IList<Keys> keyboard = new List<Keys>();
-      bool handled = false;
-        
-      internal Main()
-      {
-      }
+	internal class Program
+	{
+		static int StartX => 0;
+		static int StartY => 0;
+		static int Width => 1024;
+		static int Height => 768;
+		static int BitsPerPixel => 32;
+		static string Title = "Foundation_GameTemplate";
 
-      public override void RegisterHooks(Form form)
-      {
-         Foundation.UpdateEvent += Update;
-         Foundation.ResizeEvent += Resize;
-         Foundation.InputEvent += Input;
-         Foundation.DrawEvent += Draw;
-         Foundation.InitializeEvent += Initialize;
-         Foundation.LoadResourcesEvent += LoadResources;
-         Foundation.MainMenuEvent += MainMenu;
-         Foundation.PreDrawEvent += PreDraw;
-         Foundation.ViewportEvent += Viewport;
-         Foundation.ExitEvent += Exit;
-         this.form = form;
-      }
+		static void Main(string[] args)
+		{
+			Foundation_GameTemplate.Main m = null;
+			Thread t = new Thread(() => { (m = new Main()).Run(SurfaceType.WindowHandle_Loop, new Surface(StartX, StartY, Width, Height, Title, BitsPerPixel)); });
+			t.SetApartmentState(ApartmentState.STA);
+			t.Start();
+			while (Console.ReadLine() != "exit") ;
+			t.Abort();
+			Environment.Exit(0);
+		}
+	}
+	public class Main : Foundation
+	{
+		Point mouse;
+		RECT window_frame;
+		REW pane;
+		REW tile;
+		REW cans;
+		REW solidColor;
+		REW factory;
+		Form form;
+		IList<Keys> keyboard = new List<Keys>();
+		Pixel[,] map = new Pixel[,] { };
+		bool handled = false;
 
-      protected bool Exit(ExitArgs e)
-      {
-         return false;
-      }
+		internal Main()
+		{
+			RewBatch.Option = RenderOption.Direct2D;
+		}
 
-      public override void ClearInput()
-      {
-         keyboard.Clear();
-         handled = false;
-      }
+		public override void RegisterHooks(Form form)
+		{
+			Foundation.UpdateEvent += Update;
+			Foundation.ResizeEvent += Resize;
+			Foundation.InputEvent += Input;
+			Foundation.DrawEvent += Draw;
+			Foundation.InitializeEvent += Initialize;
+			Foundation.LoadResourcesEvent += LoadResources;
+			Foundation.MainMenuEvent += MainMenu;
+			Foundation.PreDrawEvent += PreDraw;
+			Foundation.ViewportEvent += Viewport;
+			Foundation.ExitEvent += Exit;
+			this.form = form;
+		}
 
-      protected void Input(InputArgs e)
-      {
-         try
-         { 
-            form.Invoke(new Action(() =>
-            {
-               var _mouse = form.PointToClient(System.Windows.Forms.Cursor.Position);
-               int x = _mouse.X;
-               int y = _mouse.Y;
-               this.mouse = new Point(x + 8, y + 31);
-            }));
-         }
-         catch { }
-      }
+		protected bool Exit(ExitArgs e)
+		{
+			return false;
+		}
 
-      protected void Viewport(ViewportArgs e)
-      {      
-         return;
-         if (KeyDown(Key.W))
-         {
-            e.viewport.position.Y--;
-         }
-         if (KeyDown(Key.A))
-         {
-            e.viewport.position.X--;
-         }
-         if (KeyDown(Key.S))
-         {
-            e.viewport.position.Y++;
-         }
-         if (KeyDown(Key.D))
-         { 
-            e.viewport.position.X++;
-         }
-      }
+		public override void ClearInput()
+		{
+			keyboard.Clear();
+			handled = false;
+		}
 
-      protected void PreDraw(PreDrawArgs e)
-      {
-      }
+		protected void Input(InputArgs e)
+		{
+			return;
+			try
+			{
+				form.Invoke(new Action(() =>
+				{
+					var _mouse = form.PointToScreen(System.Windows.Forms.Cursor.Position);
+					int x = _mouse.X;
+					int y = _mouse.Y;
+					this.mouse = new Point(x + 8, y + 31);
+				}));
+			}
+			catch { }
+		}
 
-      protected void MainMenu(DrawingArgs e)
-      {
-      }
+		protected void Viewport(ViewportArgs e)
+		{
+			return;
+			if (KeyDown(Key.W))
+			{
+				e.viewport.position.Y--;
+			}
+			if (KeyDown(Key.A))
+			{
+				e.viewport.position.X--;
+			}
+			if (KeyDown(Key.S))
+			{
+				e.viewport.position.Y++;
+			}
+			if (KeyDown(Key.D))
+			{
+				e.viewport.position.X++;
+			}
+		}
 
-      protected void LoadResources()
-      {
-         Asset.LoadFromFile(@".\Textures\bluepane.rew", out pane);
-         Asset.LoadFromFile(@".\Textures\background.rew", out tile);
-         Asset.LoadFromFile(@".\Textures\cans.rew", out cans);
-      }
+		protected void PreDraw(PreDrawArgs e)
+		{
+		}
 
-      protected void Initialize(InitializeArgs e)
-      {
-      }
+		protected void MainMenu(DrawingArgs e)
+		{
+		}
 
-      protected void Draw(DrawingArgs e)
-      {
-         e.rewBatch.Draw(cans, RewBatch.Viewport.X, RewBatch.Viewport.X);
-         //e.rewBatch.Draw(pane, 0, 0);
-         if (mouse.X + 50 >= 640 || mouse.Y + 50 >= 480 || mouse.X <= 0 || mouse.Y <= 0)
-               goto COLORS;
-         e.rewBatch.Draw(tile.GetPixels(), mouse.X, mouse.Y, 50, 50);
-         COLORS:
-         e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4)), 0, 50);
-         e.rewBatch.Draw(REW.Create(50, 50, Color.Red, Ext.GetFormat(4)), 50, 50);
-         e.rewBatch.Draw(REW.Create(50, 50, Color.Green, Ext.GetFormat(4)), 100, 50);
-         e.rewBatch.Draw(REW.Create(50, 50, Color.Blue, Ext.GetFormat(4)), 150, 50);
-         e.rewBatch.Draw(REW.Create(50, 50, Color.Gray, Ext.GetFormat(4)), 200, 50);
-         e.rewBatch.Draw(REW.Create(50, 50, Color.Black, Ext.GetFormat(4)), 250, 50);
-         e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4)), 640, 50);
-         e.rewBatch.DrawString("Arial", "Test_value_01", 50, 50, 200, 100, Color.White);
-      }
+		protected void LoadResources()
+		{
+			Asset.LoadFromFile(@".\Textures\bluepane.rew", out pane);
+			Asset.LoadFromFile(@".\Textures\background.rew", out tile);
+			Asset.LoadFromFile(@".\Textures\cans.rew", out cans);
 
-      protected void Update(UpdateArgs e)
-      {
-      }
-        
-      protected bool Resize(ResizeArgs e)
-      {
-         return false;
-      }
+			factory = REW.Create(640, 480, map, System.Windows.Media.PixelFormats.Bgr32, true);
+		}
 
-      private new bool KeyDown(Key k)
-      {
-         return Keyboard.PrimaryDevice.IsKeyDown(k);
-      }
-      private new bool KeyUp(Key k)
-      {
-         return Keyboard.PrimaryDevice.IsKeyUp(k);
-      }
-   }
+		protected void Initialize(InitializeArgs e)
+		{
+			new Factory().CastleGen(out map, out _, 640, 480);
+		}
+
+		protected void Draw(DrawingArgs e)
+		{
+			e.rewBatch.Draw(factory, 0, 0, 640, 480);
+			return;
+			e.rewBatch.Draw(cans, RewBatch.Viewport.X, RewBatch.Viewport.X);
+			e.rewBatch.Draw(pane, 0, 0, 250, 250);
+		COLORS:
+			e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4), true), 0, 50);
+			e.rewBatch.Draw(REW.Create(50, 50, Color.Red, Ext.GetFormat(4), true), 50, 50);
+			e.rewBatch.Draw(REW.Create(50, 50, Color.Green, Ext.GetFormat(4), true), 100, 50);
+			e.rewBatch.Draw(REW.Create(50, 50, Color.Blue, Ext.GetFormat(4), true), 150, 50);
+			e.rewBatch.Draw(REW.Create(50, 50, Color.Gray, Ext.GetFormat(4), true), 200, 50);
+			e.rewBatch.Draw(REW.Create(50, 50, Color.Black, Ext.GetFormat(4), true), 250, 50);
+			e.rewBatch.Draw(REW.Create(50, 50, Color.White, Ext.GetFormat(4), true), 640, 50);
+			e.rewBatch.DrawString("Arial", "Test_value_01", 50, 50, 200, 100, Color.White);
+		}
+
+		protected void Update(UpdateArgs e)
+		{
+		}
+
+		protected bool Resize(ResizeArgs e)
+		{
+			return false;
+		}
+
+		private new bool KeyDown(Key k)
+		{
+			return Keyboard.PrimaryDevice.IsKeyDown(k);
+		}
+		private new bool KeyUp(Key k)
+		{
+			return Keyboard.PrimaryDevice.IsKeyUp(k);
+		}
+	}
 }
