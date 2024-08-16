@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Foundation_GameTemplate": {
+      "commandName": "Project",
+      "commandLineArgs": "-mg"
+    }
+  }
+}
