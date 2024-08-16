@@ -15,12 +15,12 @@ namespace Foundation_GameTemplate
 {
     internal class Asset
     {
-        public static REW LoadFromFile(string path)
+        public static REW LoadFromFile(string path, bool argb = false)
         {
             REW rew;
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
-                (rew = new REW()).ReadData(new BinaryReader(fs));
+                (rew = new REW()).ReadData(new BinaryReader(fs), argb);
             }
             return rew;
         }

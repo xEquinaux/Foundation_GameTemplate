@@ -118,22 +118,23 @@ namespace Foundation_GameTemplate
 			public const int
 				Cans = 0,
 				BluePane = 1,
-				SqRed = 2,
-				SqGreen = 3,
-				SqBlue = 4,
-				SqWhite = 5,
-				SqBlack = 6;
+				Background = 2,
+				SqRed = 3,
+				SqGreen = 4,
+				SqBlue = 5,
+				SqWhite = 6,
+				SqBlack = 7;
 		}
 		protected override void LoadContent()
 		{
 			Texture.Add(Asset.LoadFromFile(@".\Textures\cans.rew"));
 			Texture.Add(Asset.LoadFromFile(@".\Textures\bluepane.rew"));
-			Texture.Add(REW.Create(50, 50, System.Drawing.Color.Red, System.Windows.Media.PixelFormats.Bgr32, true));
-			Texture.Add(REW.Create(50, 50, System.Drawing.Color.Green, System.Windows.Media.PixelFormats.Bgr32, true));
-			Texture.Add(REW.Create(50, 50, System.Drawing.Color.Blue, System.Windows.Media.PixelFormats.Bgr32, true));
-			Texture.Add(REW.Create(50, 50, System.Drawing.Color.White, System.Windows.Media.PixelFormats.Bgr32, true));
-			Texture.Add(REW.Create(50, 50, System.Drawing.Color.Black, System.Windows.Media.PixelFormats.Bgr32, true));
-			Texture.Add(REW.Create(800, 600, System.Drawing.Color.White, System.Windows.Media.PixelFormats.Bgr32, true));
+			Texture.Add(Asset.LoadFromFile(@".\Textures\background.rew", true));
+			Texture.Add(REW.Create(50, 50, System.Drawing.Color.Red, System.Windows.Media.PixelFormats.Bgr32, false));
+			Texture.Add(REW.Create(50, 50, System.Drawing.Color.Green, System.Windows.Media.PixelFormats.Bgr32, false));
+			Texture.Add(REW.Create(50, 50, System.Drawing.Color.Blue, System.Windows.Media.PixelFormats.Bgr32, false));
+			Texture.Add(REW.Create(50, 50, System.Drawing.Color.White, System.Windows.Media.PixelFormats.Bgr32, false));
+			Texture.Add(REW.Create(50, 50, System.Drawing.Color.Black, System.Windows.Media.PixelFormats.Bgr32, false));
 			_viewport = new Viewport(_portX, _portY, 800, 600);
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 		}
@@ -158,11 +159,20 @@ namespace Foundation_GameTemplate
 
 			var mouse = Mouse.GetState();
 
-			rewBatch.Draw(Texture[7], 0, 0);
 			rewBatch.Draw(Texture[TextureID.Cans], 0, 0);
-			//rewBatch.Draw(Texture[TextureID.BluePane], 0, 0);
+			rewBatch.Draw(Texture[TextureID.BluePane], 0, 0);
+			rewBatch.Draw(Texture[TextureID.Background], mouse.X, mouse.Y);
+			
+			byte[] result = new byte[BackBuffer.Length];
+			for (int i = 0; i < BackBuffer.Length; i += 4)
+			{
+				result[i]	  = BackBuffer[i + 1];
+				result[i + 1] = BackBuffer[i + 2];
+				result[i + 2] = BackBuffer[i + 3];
+				result[i + 3] = BackBuffer[i];
+			}
 
-			Texture2D tex = Pipeline.ArrayToTex2D(BackBuffer, 800, 600, GraphicsDevice);
+			Texture2D tex = Pipeline.ArrayToTex2D(result, 800, 600, GraphicsDevice);
 			_spriteBatch.Draw(tex, Vector2.Zero, Color.White);
 			tex.Dispose();
 
