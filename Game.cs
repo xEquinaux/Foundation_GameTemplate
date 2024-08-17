@@ -1,25 +1,13 @@
-﻿using Color = Microsoft.Xna.Framework.Color;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
-using Point = Microsoft.Xna.Framework.Point;
+﻿using FoundationR.Rew;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-using System.Linq;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Timers;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
+using Color = Microsoft.Xna.Framework.Color;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
-using Timer = System.Timers.Timer;
-using FoundationR.Rew;
-using FoundationR.Loader;
-using static System.Net.Mime.MediaTypeNames;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace Foundation_GameTemplate
 {
@@ -78,7 +66,7 @@ namespace Foundation_GameTemplate
 			base.Initialize();
 		}
 
-		protected void Resize(object sender, EventArgs e)
+		protected void Resize()
 		{
 			_graphicsMngr.PreferredBackBufferWidth = _bounds.Width;
 			_graphicsMngr.PreferredBackBufferHeight = _bounds.Height;
@@ -93,7 +81,7 @@ namespace Foundation_GameTemplate
 				_position = Window.Position;
 				if (_oldBounds != _bounds || _oldPosition != _position)
 				{
-					//ResizeEvent.Invoke(this, new EventArgs());
+					//Resize();
 				}
 				_oldBounds = _bounds;
 				_oldPosition = _position;
@@ -129,7 +117,7 @@ namespace Foundation_GameTemplate
 		{
 			Texture.Add(Asset.LoadFromFile(@".\Textures\cans.rew"));
 			Texture.Add(Asset.LoadFromFile(@".\Textures\bluepane.rew"));
-			Texture.Add(Asset.LoadFromFile(@".\Textures\background.rew", true));
+			Texture.Add(Asset.LoadFromFile(@".\Textures\background.rew", false));
 			Texture.Add(REW.Create(50, 50, System.Drawing.Color.Red, System.Windows.Media.PixelFormats.Bgr32, false));
 			Texture.Add(REW.Create(50, 50, System.Drawing.Color.Green, System.Windows.Media.PixelFormats.Bgr32, false));
 			Texture.Add(REW.Create(50, 50, System.Drawing.Color.Blue, System.Windows.Media.PixelFormats.Bgr32, false));
@@ -154,30 +142,53 @@ namespace Foundation_GameTemplate
 		protected override void Draw(GameTime gameTime)
 		{
 			if (GraphicsDevice == null) return;
-			
+
 			BackBuffer = new byte[800 * 600 * 4];
 
 			var mouse = Mouse.GetState();
 
-			rewBatch.Draw(Texture[TextureID.Cans], 0, 0);
+			REW clone = Texture[TextureID.Cans].Clone();
+			LightPass.PreProcessing(
+				new List<System.Drawing.Rectangle>() 
+				{
+					new System.Drawing.Rectangle(375, 275, 50, 50),
+					new System.Drawing.Rectangle(425, 275, 50, 50) 
+				}, 
+				new List<Background>() 
+				{
+					new Background() 
+					{
+						position = Vector2.Zero, hitbox = new System.Drawing.Rectangle(0, 0, 800, 600), texture = clone 
+					} 
+				}, 
+				new List<Lamp>() 
+				{
+					new Lamp(150f) { position = mouse.Position.ToVector2(), staticLamp = false, lampColor = System.Drawing.Color.Orange }
+				}
+			);
+
+			rewBatch.Draw(clone, 0, 0);
 			rewBatch.Draw(Texture[TextureID.BluePane], 0, 0);
 			rewBatch.Draw(Texture[TextureID.Background], mouse.X, mouse.Y);
-			
+			rewBatch.Draw(Texture[TextureID.SqRed], 375, 275);
+			rewBatch.Draw(Texture[TextureID.SqRed], 425, 275);
+
 			byte[] result = new byte[BackBuffer.Length];
 			for (int i = 0; i < BackBuffer.Length; i += 4)
 			{
-				result[i]	  = BackBuffer[i + 1];
+				result[i] = BackBuffer[i + 1];
 				result[i + 1] = BackBuffer[i + 2];
 				result[i + 2] = BackBuffer[i + 3];
 				result[i + 3] = BackBuffer[i];
 			}
 
-			Texture2D tex = Pipeline.ArrayToTex2D(result, 800, 600, GraphicsDevice);
+			Texture2D tex = result.ArrayToTex2D(800, 600, GraphicsDevice);
 			_spriteBatch.Draw(tex, Vector2.Zero, Color.White);
 			tex.Dispose();
 
+			clone = null;
 			BackBuffer = null;
-			
+
 			base.Draw(gameTime);
 		}
 

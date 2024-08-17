@@ -1,9 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using FoundationR;
-using FoundationR.Lib;
-using Microsoft.Win32;
+﻿using FoundationR.Lib;
 
 namespace Foundation_GameTemplate
 {
@@ -23,7 +18,7 @@ namespace Foundation_GameTemplate
 				type = args[0];
 			}
 			switch (type)
-			{ 
+			{
 				case "-f":
 					Foundation_GameTemplate.Main m = null;
 					Thread t = new Thread(() => { (m = new Main()).Run(SurfaceType.WindowHandle_Loop, new FoundationR.Lib.Surface(StartX, StartY, Width, Height, Title, BitsPerPixel)); });

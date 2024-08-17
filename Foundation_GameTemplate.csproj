@@ -8,7 +8,7 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<LangVersion>11</LangVersion>
 		<StartupObject>Foundation_GameTemplate.Program</StartupObject>
-		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<AllowUnsafeBlocks>False</AllowUnsafeBlocks>
 	</PropertyGroup>
 
 	<ItemGroup>
