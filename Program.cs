@@ -11,7 +11,7 @@ using Microsoft.Win32;
 
 namespace Foundation_GameTemplate
 {
-    internal class Program
+    public class Program
     {
         static int StartX => 0;
         static int StartY => 0;
@@ -19,13 +19,24 @@ namespace Foundation_GameTemplate
         static int Height => 480;
         static int BitsPerPixel => 32;
         static string Title = "Foundation_GameTemplate";
+        public static Main m;
         static void Main(string[] args)
         {
-            Foundation_GameTemplate.Main m = null;
             Thread t = new Thread(() => { (m = new Main()).Run(SurfaceType.WindowHandle_Loop, new FoundationR.Surface(StartX, StartY, Width, Height, Title, BitsPerPixel)); });
             t.SetApartmentState(ApartmentState.STA);
             t.Start();
             while (Console.ReadLine() != "exit");
+            m.Close();
+            t.Abort();
+            Environment.Exit(0);
+        }
+        public static void Run(bool noBorder = false)
+        {
+            Thread t = new Thread(() => { (m = new Main()).Run(noBorder ? SurfaceType.WindowHandle_Loop_NoBorder : SurfaceType.WindowHandle_Loop, new FoundationR.Surface(StartX, StartY, Width, Height, Title, BitsPerPixel)); });
+            t.SetApartmentState(ApartmentState.STA);
+            t.Start();
+            while (Console.ReadLine() != "exit");
+            m.Close();
             t.Abort();
             Environment.Exit(0);
         }
