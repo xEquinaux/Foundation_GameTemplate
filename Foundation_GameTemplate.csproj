@@ -14,10 +14,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="BasicAvatarGenerator" Version="2.4.0" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\FoundationR\FoundationR.csproj" />
 	</ItemGroup>
 
